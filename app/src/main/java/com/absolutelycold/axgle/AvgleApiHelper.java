@@ -16,13 +16,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 public  class AvgleApiHelper {
 
 
     public static final Integer CONNECT_NORMAL = 200;
-
 
 
 
@@ -77,6 +75,9 @@ public  class AvgleApiHelper {
     }
 
     public static ArrayList<HashMap<String, Object>> allVideosCollection(int page, int limit) {
+
+        int collectionsAIPGetCode;
+        int coverGetCode;
         ArrayList<HashMap<String,Object>> collectionsInfo = new ArrayList<HashMap<String,Object>>();
 
         String url = "https://api.avgle.com/v1/collections/" + page + "?limit=" + limit;
@@ -86,6 +87,7 @@ public  class AvgleApiHelper {
         try {
             String content = getURLContent(url);
             if (content == null) {
+                collectionsAIPGetCode = 404;
                 return null;
             }
             JSONObject json = new JSONObject(content);
@@ -100,14 +102,14 @@ public  class AvgleApiHelper {
                 Integer id = collect.getInt("id");
                 Integer totalViews = collect.getInt("total_views");
                 Integer videoCounts = collect.getInt("video_count");
-                Bitmap bitmap = getImageBitmap(imgUrl);
+                //Bitmap bitmap = getImageBitmap(imgUrl);
 
                 HashMap hashMap = new HashMap();
                 hashMap.put("id", id);
                 hashMap.put("title", title);
                 hashMap.put("keyword", keyword);
                 hashMap.put("cover_url", imgUrl);
-                hashMap.put("cover_bitmap", bitmap);
+                //hashMap.put("cover_bitmap", bitmap);
                 hashMap.put("total_views", totalViews);
                 hashMap.put("video_count", videoCounts);
                 collectionsInfo.add(hashMap);
@@ -122,21 +124,27 @@ public  class AvgleApiHelper {
         return collectionsInfo;
     }
 
-    public static Bitmap getImageBitmap(String imageUrl) {
+    public static HashMap<String, Object> getImageBitmap(String imageUrl) {
+
+        HashMap<String, Object> bitmapBundle = new HashMap<>();
         try {
             URL url = new URL(imageUrl);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.setConnectTimeout(10000);
             connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36");
-            int current_collection_cover_code = connection.getResponseCode();
+            int current_collection_cover_code = connection.getResponseCode(); // save status to bitmapBundle
+            System.out.println("Vising Statuscode:" + current_collection_cover_code);
+            bitmapBundle.put("code", current_collection_cover_code);
             if (current_collection_cover_code == CONNECT_NORMAL) {
                 InputStream inputStream = connection.getInputStream();
                 Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                return bitmap;
+                bitmapBundle.put("bitmap", bitmap);
+                return bitmapBundle;
             }
             else {
-                return null;
+                bitmapBundle.put("bitmap", null);
+                return bitmapBundle;
             }
         } catch (MalformedURLException e) {
             e.printStackTrace();

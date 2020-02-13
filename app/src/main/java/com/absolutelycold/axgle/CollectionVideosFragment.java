@@ -9,20 +9,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Handler;
-import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.baoyz.widget.PullRefreshLayout;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 
 /**
@@ -47,7 +39,7 @@ public class CollectionVideosFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_all_videos, container, false);
+        LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_collections, container, false);
 
 
         new AllVideosLoadTask().execute(0, 5);

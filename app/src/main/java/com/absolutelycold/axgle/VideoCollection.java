@@ -9,6 +9,8 @@ public class VideoCollection extends VideosInfo{
 
     private int page;
     private int limit;
+    private HashMap<Integer, Bitmap> bitmaps = new HashMap<>();
+    private HashMap<Integer, Integer> coverStatusCodes = new HashMap<>();
 
     private ArrayList<HashMap<String,Object>> collections = null;
     private ArrayList<HashMap<String,Object>> tempCollections;
@@ -65,11 +67,33 @@ public class VideoCollection extends VideosInfo{
     }
 
     public Bitmap getCoverBitmap(int index) {
-        if (index >= collections.size()) {
+        if (index >= bitmaps.size()) {
             return null;
         }
-        return (Bitmap)collections.get(index).get("cover_bitmap");
+        return bitmaps.get(index);
     }
+
+    public void addCoverBitmap(Integer index, Bitmap bitmap) {
+        if (bitmaps.get(index) == null) {
+            this.bitmaps.put(index, bitmap);
+        }
+
+    }
+
+    public Integer getCoverStatusCode(int index) {
+        if (index >= coverStatusCodes.size()) {
+            return null;
+        }
+
+        return coverStatusCodes.get(index);
+    }
+
+    public void updateCoverStatusCode(Integer index, Integer code) {
+        if (coverStatusCodes.get(index) == null) {
+            coverStatusCodes.put(index, code);
+        }
+    }
+
 
     public Integer getTotalViews(int index) {
         if (index >= collections.size()) {

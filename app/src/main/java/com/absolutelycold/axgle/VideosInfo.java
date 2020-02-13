@@ -9,7 +9,7 @@ public abstract class VideosInfo {
 
     public abstract String getKeyword(int index);
 
-    public abstract Bitmap getCoverBitmap(int index);
+//    public abstract Bitmap getCoverBitmap(int index);
 
     public abstract Integer getTotalViews(int index);
 
