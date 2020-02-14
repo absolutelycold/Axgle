@@ -2,19 +2,25 @@
 
 A simple, fast, beautiful and light android application to Jerk off.
 
+![Preview](Preview1.jpg)
+
 Finished:
 
-✔ Video Collections shown in the home page
+✔ Video Collections Information shown in the home page
 
-✔ A sketch UI
+✔ Show all videos' information in the All tab
+
+✔ A sketched cool UI
 
 Not Finished Yet:
 
-✖ Fetch all videos
+✖ Display single video in a new activity
+
+✖ Jump to the video embedded url to watch the video
 
 ✖ Search videos
 
-✖ Watch videos
+✖ Watch videos (If someone provide me java library for capturing the m3u8 video from video page)
 
 ✖ Category Page
 

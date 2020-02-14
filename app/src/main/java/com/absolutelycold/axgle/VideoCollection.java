@@ -2,11 +2,14 @@ package com.absolutelycold.axgle;
 
 import android.graphics.Bitmap;
 
+import androidx.annotation.IntegerRes;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class VideoCollection extends VideosInfo{
 
+    //public final Integer TYPE = 0;
     private int page;
     private int limit;
     private HashMap<Integer, Bitmap> bitmaps = new HashMap<>();
@@ -18,6 +21,7 @@ public class VideoCollection extends VideosInfo{
         this.page = page;
         this.limit = limit;
 
+        setType(CoverCardAdapter.VIEW_TYPE_COLLECTIONS);
         ArrayList<HashMap<String,Object>> getData = AvgleApiHelper.allVideosCollection(page, limit);
         if (getData != null) {
             collections = getData;
@@ -31,7 +35,7 @@ public class VideoCollection extends VideosInfo{
             collections.addAll(tempCollections);
             System.out.println(collections);
         }
-        System.out.println("LoadMore is called." + ItemsCount());
+        //System.out.println("LoadMore is called." + ItemsCount());
     }
 
 
@@ -78,6 +82,15 @@ public class VideoCollection extends VideosInfo{
             this.bitmaps.put(index, bitmap);
         }
 
+    }
+
+    @Override
+    public String getCoverUrl(int index) {
+        if (index >= collections.size()) {
+            return null;
+        }
+
+        return (String)collections.get(index).get("cover_url");
     }
 
     public Integer getCoverStatusCode(int index) {

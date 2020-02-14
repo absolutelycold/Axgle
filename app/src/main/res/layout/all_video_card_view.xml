@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cardview = "http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:id="@+id/all_video_card"
+    cardview:cardCornerRadius="4dp">
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="290dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="230dp"
+                android:adjustViewBounds="true"
+                android:id="@+id/all_video_image"/>
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="?android:attr/progressBarStyleSmall"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="105dp"
+                android:id="@+id/all_video_load_circle"
+                android:visibility="visible"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_below="@+id/all_video_image"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="2dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:id="@+id/video_name"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_av_timer_black_18dp"
+                android:id="@+id/timer_logo"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/video_name"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:id="@+id/video_duration"
+                android:layout_below="@+id/video_name"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="12dp"
+                android:layout_toRightOf="@id/timer_logo"
+                android:textStyle="bold"/>
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_file_upload_black_18dp"
+                android:id="@+id/upload_time_logo"
+                android:layout_toRightOf="@+id/video_duration"
+                android:layout_below="@id/video_name"
+                android:layout_marginLeft="36dp"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/upload_time_logo"
+                android:layout_below="@+id/video_name"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="12dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:id="@+id/upload_time"
+                android:textStyle="bold"/>
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_play_circle_filled_black_18dp"
+                android:id="@+id/play_num_logo"
+                android:layout_below="@+id/video_name"
+                android:layout_toLeftOf="@id/play_num"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/play_num"
+                android:layout_below="@id/video_name"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="12dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:layout_alignParentRight="true"
+                android:textStyle="bold"
+                android:layout_marginRight="3dp"/>
+
+
+
+        </RelativeLayout>
+
+
+
+
+
+
+
+
+
+</androidx.cardview.widget.CardView>

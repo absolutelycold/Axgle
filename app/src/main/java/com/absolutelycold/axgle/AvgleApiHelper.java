@@ -14,7 +14,10 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 public  class AvgleApiHelper {
@@ -74,6 +77,39 @@ public  class AvgleApiHelper {
         return result;
     }
 
+
+    public static HashMap<String, Object> getImageBitmap(String imageUrl) {
+
+        HashMap<String, Object> bitmapBundle = new HashMap<>();
+        try {
+            URL url = new URL(imageUrl);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setConnectTimeout(10000);
+            connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36");
+            int current_collection_cover_code = connection.getResponseCode(); // save status to bitmapBundle
+            System.out.println("Vising Statuscode:" + current_collection_cover_code);
+            bitmapBundle.put("code", current_collection_cover_code);
+            if (current_collection_cover_code == CONNECT_NORMAL) {
+                InputStream inputStream = connection.getInputStream();
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                bitmapBundle.put("bitmap", bitmap);
+                return bitmapBundle;
+            }
+            else {
+                bitmapBundle.put("bitmap", null);
+                return bitmapBundle;
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            return null;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
     public static ArrayList<HashMap<String, Object>> allVideosCollection(int page, int limit) {
 
         int collectionsAIPGetCode;
@@ -124,36 +160,71 @@ public  class AvgleApiHelper {
         return collectionsInfo;
     }
 
-    public static HashMap<String, Object> getImageBitmap(String imageUrl) {
 
-        HashMap<String, Object> bitmapBundle = new HashMap<>();
+    public static ArrayList<HashMap<String, Object>> allVideos(int page, int limit) {
+
+        int collectionsAIPGetCode;
+        int coverGetCode;
+        ArrayList<HashMap<String,Object>> allVideosInfo = new ArrayList<HashMap<String,Object>>();
+
+        String url = "https://api.avgle.com/v1/videos/" + page + "?limit=" + limit;
+
+
+
         try {
-            URL url = new URL(imageUrl);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
-            connection.setConnectTimeout(10000);
-            connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36");
-            int current_collection_cover_code = connection.getResponseCode(); // save status to bitmapBundle
-            System.out.println("Vising Statuscode:" + current_collection_cover_code);
-            bitmapBundle.put("code", current_collection_cover_code);
-            if (current_collection_cover_code == CONNECT_NORMAL) {
-                InputStream inputStream = connection.getInputStream();
-                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                bitmapBundle.put("bitmap", bitmap);
-                return bitmapBundle;
+            String content = getURLContent(url);
+            if (content == null) {
+                collectionsAIPGetCode = 404;
+                return null;
             }
-            else {
-                bitmapBundle.put("bitmap", null);
-                return bitmapBundle;
+            JSONObject json = new JSONObject(content);
+            JSONObject response = json.getJSONObject("response");
+            JSONArray videos = response.getJSONArray("videos");
+
+            for (int i = 0; i < videos.length(); i++) {
+                JSONObject video = videos.getJSONObject(i);
+                String previewPicUrl = video.getString("preview_url");
+                String title = video.getString("title");
+                String keyword = video.getString("keyword");
+                String embeddedUrl = video.getString("embedded_url");
+                Integer duration = video.getInt("duration");
+                int hours = duration / 3600;
+                int minutes = (duration % 3600) / 60;
+                int seconds = duration % 60;
+                String durationString = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+
+                Integer unixTimeStamp = video.getInt("addtime");
+                Date uploadDate = new Date((long) unixTimeStamp* 1000);
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss");
+                String updateTime = dateFormat.format(uploadDate);
+
+                Integer viewNum = video.getInt("viewnumber");
+                Integer likesNum = video.getInt("likes");
+                Integer dislikeNum = video.getInt("dislikes");
+                //Bitmap bitmap = getImageBitmap(imgUrl);
+
+                HashMap hashMap = new HashMap();
+                hashMap.put("title", title);
+                hashMap.put("preview_url", previewPicUrl);
+                hashMap.put("keyword", keyword);
+                hashMap.put("embedded_url", embeddedUrl);
+                hashMap.put("uploadTime", updateTime);
+                hashMap.put("duration", durationString);
+                hashMap.put("viewnum", viewNum);
+                hashMap.put("likes", likesNum);
+                hashMap.put("dislikes", dislikeNum);
+
+                allVideosInfo.add(hashMap);
+
             }
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-            return null;
-        } catch (IOException e) {
+
+        } catch (JSONException e) {
             e.printStackTrace();
             return null;
         }
 
+        return allVideosInfo;
     }
+
 
 }

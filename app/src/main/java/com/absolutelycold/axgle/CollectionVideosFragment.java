@@ -26,6 +26,7 @@ public class CollectionVideosFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private PullRefreshLayout refreshLayout;
+    private boolean isRefreshing = false;
 
     boolean isLoading = false;
 
@@ -50,7 +51,6 @@ public class CollectionVideosFragment extends Fragment {
         refreshLayout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-
                 new AllVideosLoadTask().execute(0, 5);
             }
         });
@@ -75,7 +75,9 @@ public class CollectionVideosFragment extends Fragment {
         @Override
         protected void onProgressUpdate(Void... values) {
             super.onProgressUpdate(values);
-            refreshLayout.setRefreshing(true);
+            if (!isRefreshing) {
+                refreshLayout.setRefreshing(true);
+            }
         }
 
         @Override
@@ -87,6 +89,7 @@ public class CollectionVideosFragment extends Fragment {
             recyclerView.setAdapter(adapter);
             InitScrollListener();
             refreshLayout.setRefreshing(false);
+            isRefreshing = false;
         }
     }
 
@@ -121,7 +124,7 @@ public class CollectionVideosFragment extends Fragment {
         protected void onPostExecute(Void rv) {
             super.onPostExecute(rv);
             this.videoCollection.removeItem(videoInfoCounts - 1);
-            this.recyclerView.getAdapter().notifyItemRemoved(videoInfoCounts);
+            this.recyclerView.getAdapter().notifyItemRemoved(videoInfoCounts - 1);
             this.recyclerView.getAdapter().notifyDataSetChanged();
             isLoading = false;
         }
