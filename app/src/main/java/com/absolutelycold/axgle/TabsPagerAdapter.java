@@ -8,7 +8,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 public class TabsPagerAdapter extends FragmentPagerAdapter {
 
-    private String[] tabs = {"Collections", "Anal"};
+    private String[] tabs = {"Collections", "All"};
 
     public TabsPagerAdapter(@NonNull FragmentManager fm) {
         super(fm);

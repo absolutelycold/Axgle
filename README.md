@@ -1,6 +1,6 @@
 ![Logo](./logo.png)
 
-A simple, fast, beautiful android application to Jerk off.
+A simple, fast, beautiful and light android application to Jerk off.
 
 Finished:
 

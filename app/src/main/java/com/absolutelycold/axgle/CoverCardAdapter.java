@@ -204,8 +204,8 @@ public class CoverCardAdapter extends RecyclerView.Adapter {
             }
 
 
-            if (bitmap != null) {
-                notifyDataSetChanged();
+            if (videoCollection.getCoverBitmap(position) != null) {
+                notifyItemChanged(position);
             }
 
 
