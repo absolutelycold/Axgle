@@ -7,20 +7,23 @@
     android:id="@+id/cover_card"
     cardview:cardCornerRadius="4dp">
 
-    <LinearLayout
+    <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/cover_linear_layout"
-        android:orientation="vertical">
+        android:columnCount="6">
 
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="9"
+            android:layout_width="match_parent"
+            android:layout_height="230dp"
+            android:layout_rowWeight="9"
+            android:layout_columnSpan="6"
+            android:layout_column="0"
+            android:layout_row="0"
             >
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="240dp"
+                android:layout_height="230dp"
                 android:adjustViewBounds="true"
                 android:id="@+id/cover_image"/>
 
@@ -34,13 +37,71 @@
 
         </RelativeLayout>
 
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_row="1"
+            android:layout_column="0"
+            android:layout_columnWeight="3"
+            android:src="@drawable/ic_person_black_18dp"
+            android:layout_gravity="center"/>
 
         <TextView
+            android:id="@+id/cover_name"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:id="@+id/cover_name"/>
+            android:layout_height="wrap_content"
+            android:layout_row="1"
+            android:layout_column="1"
+            android:layout_columnWeight="2"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textStyle="bold" />
 
-    </LinearLayout>
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_row="1"
+            android:layout_column="2"
+            android:layout_columnWeight="3"
+            android:src="@drawable/ic_folder_black_18dp"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:id="@+id/video_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="1"
+            android:layout_column="3"
+            android:layout_columnWeight="2"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_row="1"
+            android:layout_column="4"
+            android:layout_columnWeight="3"
+            android:src="@drawable/ic_play_circle_filled_black_18dp"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:id="@+id/total_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="1"
+            android:layout_column="5"
+            android:layout_columnWeight="2"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textStyle="bold" />
+
+
+    </GridLayout>
 
 </androidx.cardview.widget.CardView>

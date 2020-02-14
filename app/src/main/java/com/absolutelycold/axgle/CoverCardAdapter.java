@@ -97,6 +97,10 @@ public class CoverCardAdapter extends RecyclerView.Adapter {
 
             TextView coverName = cardView.findViewById(R.id.cover_name);
             coverName.setText(videoCollection.getTitle(position));
+            TextView totalView = cardView.findViewById(R.id.total_view);
+            totalView.setText(videoCollection.getTotalViews(position).toString());
+            TextView videoNum = cardView.findViewById(R.id.video_num);
+            videoNum.setText(videoCollection.getVideoCount(position).toString());
 
             ImageView imageView = (ImageView)cardView.findViewById(R.id.cover_image);
             HashMap<String, Object> collectionItem = videoCollection.getItem(position);
