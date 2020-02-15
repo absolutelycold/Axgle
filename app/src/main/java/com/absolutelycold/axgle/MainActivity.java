@@ -11,7 +11,9 @@ import android.view.MenuItem;
 
 import com.google.android.material.tabs.TabLayout;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.ArrayList;
+
+public class MainActivity extends AppCompatActivity implements OrderDialogFragment.Listener{
 
     private ViewPager viewPager;
     private Fragment currentFragment;
@@ -31,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 if (tab.getText().equals("All")) {
-                    System.out.println("Change to All tab");
+                    //System.out.println("Change to All tab");
                     refreshAllItem.setVisible(true);
                     sortAllItem.setVisible(true);
                 }
@@ -65,14 +67,46 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        currentFragment = ((TabsPagerAdapter)viewPager.getAdapter()).getCurrentFragment();
         switch (item.getItemId()) {
             case R.id.refresh_all_tab:
-                currentFragment = ((TabsPagerAdapter)viewPager.getAdapter()).getCurrentFragment();
                 if (currentFragment instanceof AllVideosFragment) {
                     ((AllVideosFragment)currentFragment).getRecyclerView().scrollToPosition(0);
                     ((AllVideosFragment)currentFragment).refreshAll();
                 }
+                return true;
+            case R.id.action_sort_all:
+                ArrayList<String> order_options = new ArrayList<>();
+                order_options.add("Latest");
+                order_options.add("Most views");
+                order_options.add("Top rated");
+                order_options.add("Most fav");
+                OrderDialogFragment.newInstance(order_options).show(getSupportFragmentManager(), OrderDialogFragment.TAG);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onItemClicked(int position) {
+        //something to to after listening
+        String order = "mr";
+        switch (position) {
+            case 0:
+                order = "mr";
+                break;
+            case 1:
+                order = "mv";
+                break;
+            case 2:
+                order = "tr";
+                break;
+            case 3:
+                order = "tf";
+                break;
+        }
+        if (currentFragment instanceof AllVideosFragment) {
+            ((AllVideosFragment)currentFragment).refreshUsingNewOrder(order);
+        }
+        System.out.println(position + "is clicked");
     }
 }

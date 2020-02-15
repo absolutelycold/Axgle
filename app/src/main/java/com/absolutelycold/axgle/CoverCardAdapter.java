@@ -251,7 +251,8 @@ public class CoverCardAdapter extends RecyclerView.Adapter {
                 //normal
                 videosInfo.addCoverBitmap(position, bitmap);
             }
-            else if (statusCode >= 400 & statusCode <500) {
+            //else if (statusCode >= 400 & statusCode <500) {
+            else if (statusCode == 404){
                 //cannot reach the cover
                 videosInfo.addCoverBitmap(position, bitmap_404);
             }

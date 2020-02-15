@@ -29,7 +29,7 @@ public class AllVideosFragment extends Fragment {
     private RecyclerView recyclerView = null;
     private boolean isLoading = false;
     private boolean isRefreshing = false;
-    private String order = "mv";
+    private String order = "mr";
     private Integer CHID = null;
 
     public AllVideosFragment() {
@@ -142,6 +142,11 @@ public class AllVideosFragment extends Fragment {
 
     public void refreshAll() {
         new LoadAllVideosInfoTask().execute(0, 20, CHID, order);
+    }
+
+    public void refreshUsingNewOrder(String order) {
+        this.order = order;
+        new LoadAllVideosInfoTask().execute(0, 20, CHID, this.order);
     }
 
     public RecyclerView getRecyclerView() {
