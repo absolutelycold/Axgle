@@ -149,6 +149,12 @@ public class AllVideosFragment extends Fragment {
         new LoadAllVideosInfoTask().execute(0, 20, CHID, this.order);
     }
 
+    public void refreshUsingNewCHID(Integer CHID) {
+        System.out.println("Select CHID: " + CHID);
+        this.CHID = CHID;
+        new LoadAllVideosInfoTask().execute(0, 20, this.CHID, this.order);
+    }
+
     public RecyclerView getRecyclerView() {
         return recyclerView;
     }

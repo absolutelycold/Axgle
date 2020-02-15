@@ -12,6 +12,12 @@ Finished:
 
 ✔ A sketched cool UI
 
+✔ Show all categories in the bottom sheet by clicking the categories icon in the action bar
+
+✔ Jump to different category channel to watch different type of movies
+
+✔ Sort videos by latest uploading, most views, most favs, top rated and etc.
+
 Not Finished Yet:
 
 ✖ Display single video in a new activity
@@ -21,7 +27,5 @@ Not Finished Yet:
 ✖ Search videos
 
 ✖ Watch videos (If someone provide me java library for capturing the m3u8 video from video page)
-
-✖ Category Page
 
 ✖ Collect favorite videos in the local database

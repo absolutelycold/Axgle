@@ -43,7 +43,7 @@ public class CollectionVideosFragment extends Fragment {
         LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_collections, container, false);
 
 
-        new AllVideosLoadTask().execute(0, 20);
+
 
 
         refreshLayout = linearLayout.findViewById(R.id.pull_refresh_layout);
@@ -55,6 +55,7 @@ public class CollectionVideosFragment extends Fragment {
             }
         });
 
+        new AllVideosLoadTask().execute(0, 20);
         recyclerView = refreshLayout.findViewById(R.id.all_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));;
 
@@ -66,8 +67,15 @@ public class CollectionVideosFragment extends Fragment {
 
 
         @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            if (!isRefreshing) {
+                refreshLayout.setRefreshing(true);
+            }
+        }
+
+        @Override
         protected VideoCollection doInBackground(Integer... pages) {
-            publishProgress();
             VideoCollection vc = new VideoCollection(pages[0],pages[1]);
             return vc;
         }
@@ -75,9 +83,6 @@ public class CollectionVideosFragment extends Fragment {
         @Override
         protected void onProgressUpdate(Void... values) {
             super.onProgressUpdate(values);
-            if (!isRefreshing) {
-                refreshLayout.setRefreshing(true);
-            }
         }
 
         @Override

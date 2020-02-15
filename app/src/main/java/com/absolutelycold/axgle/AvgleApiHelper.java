@@ -236,5 +236,49 @@ public  class AvgleApiHelper {
         return allVideosInfo;
     }
 
+    public static ArrayList<HashMap<String, Object>> getCategories() {
+
+        int collectionsAIPGetCode;
+        int coverGetCode;
+        ArrayList<HashMap<String,Object>> allCategories = new ArrayList<HashMap<String,Object>>();
+
+        String url = "https://api.avgle.com/v1/categories";
+
+
+
+        try {
+            String content = getURLContent(url);
+            if (content == null) {
+                collectionsAIPGetCode = 404;
+                return null;
+            }
+            JSONObject json = new JSONObject(content);
+            JSONObject response = json.getJSONObject("response");
+            JSONArray collections = response.getJSONArray("categories");
+
+            for (int i = 0; i < collections.length(); i++) {
+                JSONObject collect = collections.getJSONObject(i);
+
+                String CHID = collect.getString("CHID");
+                Integer categoryTotalVideo = collect.getInt("total_videos");
+                String categoryName = collect.getString("name");
+
+                //Bitmap bitmap = getImageBitmap(imgUrl);
+
+                HashMap hashMap = new HashMap();
+                hashMap.put("CHID", CHID);
+                hashMap.put("total_videos", categoryTotalVideo);
+                hashMap.put("name", categoryName);
+                allCategories.add(hashMap);
+
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return allCategories;
+    }
 
 }

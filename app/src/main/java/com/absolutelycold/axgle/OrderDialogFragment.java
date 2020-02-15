@@ -72,7 +72,7 @@ public class OrderDialogFragment extends BottomSheetDialogFragment {
     }
 
     public interface Listener {
-        void onItemClicked(int position);
+        void onSortOptionSelected(int position);
     }
 
     private class ViewHolder extends RecyclerView.ViewHolder {
@@ -86,7 +86,7 @@ public class OrderDialogFragment extends BottomSheetDialogFragment {
                 @Override
                 public void onClick(View v) {
                     if (mListener != null) {
-                        mListener.onItemClicked(getAdapterPosition());
+                        mListener.onSortOptionSelected(getAdapterPosition());
                         dismiss();
                     }
                 }

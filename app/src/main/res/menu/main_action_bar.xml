@@ -2,11 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
+    <item android:id="@+id/action_category"
+        android:orderInCategory="1"
+        android:title="Category"
+        android:icon="@drawable/baseline_category_black_18"
+        app:showAsAction="ifRoom"/>
+
     <item android:id="@+id/action_sort_all"
         android:title="Sort All"
         android:icon="@drawable/ic_sort_black_18dp"
         app:showAsAction="ifRoom"
-        android:orderInCategory="1"/>
+        android:orderInCategory="2"/>
 
     <item android:id="@+id/refresh_all_tab"
         android:title="@string/refresh_all"
