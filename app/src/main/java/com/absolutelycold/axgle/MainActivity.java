@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements OrderDialogFragme
         switch (item.getItemId()) {
             case R.id.refresh_all_tab:
                 if (currentFragment instanceof AllVideosFragment) {
-                    ((AllVideosFragment)currentFragment).getRecyclerView().scrollToPosition(0);
+                    //((AllVideosFragment)currentFragment).getRecyclerView().scrollToPosition(0);
                     ((AllVideosFragment)currentFragment).refreshAll();
                 }
                 return true;
@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements OrderDialogFragme
     @Override
     public void onCategoryClicked(int position) {
         TabLayout.Tab tab = tabLayout.getTabAt(1);
-        if (position == categoriesData.size()) {
+        if (position == categoriesData.size() - 1) {
             ((AllVideosFragment)currentFragment).refreshUsingNewCHID(null);
             tab.setText("All");
         }

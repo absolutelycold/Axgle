@@ -141,17 +141,20 @@ public class AllVideosFragment extends Fragment {
     }
 
     public void refreshAll() {
+        recyclerView.scrollToPosition(0);
         new LoadAllVideosInfoTask().execute(0, 20, CHID, order);
     }
 
     public void refreshUsingNewOrder(String order) {
         this.order = order;
+        recyclerView.scrollToPosition(0);
         new LoadAllVideosInfoTask().execute(0, 20, CHID, this.order);
     }
 
     public void refreshUsingNewCHID(Integer CHID) {
-        System.out.println("Select CHID: " + CHID);
+        //System.out.println("Select CHID: " + CHID);
         this.CHID = CHID;
+        recyclerView.scrollToPosition(0);
         new LoadAllVideosInfoTask().execute(0, 20, this.CHID, this.order);
     }
 
