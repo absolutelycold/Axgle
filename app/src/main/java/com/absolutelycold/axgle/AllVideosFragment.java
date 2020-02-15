@@ -29,6 +29,8 @@ public class AllVideosFragment extends Fragment {
     private RecyclerView recyclerView = null;
     private boolean isLoading = false;
     private boolean isRefreshing = false;
+    private String order = "mv";
+    private Integer CHID = null;
 
     public AllVideosFragment() {
         // Required empty public constructor
@@ -44,40 +46,44 @@ public class AllVideosFragment extends Fragment {
         recyclerView = (RecyclerView) linearLayout.findViewById(R.id.all_videos_recylerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        new LoadAllVideosInfoTask().execute(0, 5);
+        new LoadAllVideosInfoTask().execute(0, 20, CHID, order);
 
         pullRefreshLayout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new LoadAllVideosInfoTask().execute(0, 5);
+                new LoadAllVideosInfoTask().execute(0, 20, CHID, order);
             }
         });
 
         return linearLayout;
     }
 
-    public class LoadAllVideosInfoTask extends AsyncTask<Integer, Void, Void> {
+    public class LoadAllVideosInfoTask extends AsyncTask<Object, Void, Void> {
 
 
         @Override
-        protected Void doInBackground(Integer... integers) {
-            publishProgress();
-            allVideosInfo = new AllVideos(integers[0], integers[1]);
-            return null;
-        }
-
-        @Override
-        protected void onProgressUpdate(Void... values) {
-            super.onProgressUpdate(values);
+        protected void onPreExecute() {
+            super.onPreExecute();
             if (!isRefreshing) {
                 pullRefreshLayout.setRefreshing(true);
             }
         }
 
         @Override
+        protected Void doInBackground(Object... objects) {
+            publishProgress();
+            allVideosInfo = new AllVideos((Integer) objects[0], (Integer) objects[1], (Integer) objects[2], (String) objects[3]);
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            System.out.println("bind data to adapter: " + allVideosInfo.ItemsCount());
             recyclerView.setAdapter(new CoverCardAdapter(allVideosInfo));
             InitRecyclerViewListener();
             pullRefreshLayout.setRefreshing((false));
@@ -132,5 +138,13 @@ public class AllVideosFragment extends Fragment {
             isLoading = false;
             super.onPostExecute(aVoid);
         }
+    }
+
+    public void refreshAll() {
+        new LoadAllVideosInfoTask().execute(0, 20, CHID, order);
+    }
+
+    public RecyclerView getRecyclerView() {
+        return recyclerView;
     }
 }

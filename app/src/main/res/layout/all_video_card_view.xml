@@ -63,32 +63,11 @@
             <ImageView
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:src="@drawable/ic_file_upload_black_18dp"
-                android:id="@+id/upload_time_logo"
-                android:layout_toRightOf="@+id/video_duration"
-                android:layout_below="@id/video_name"
-                android:layout_marginLeft="36dp"
-                android:layout_marginTop="10dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/upload_time_logo"
-                android:layout_below="@+id/video_name"
-                android:layout_marginLeft="3dp"
-                android:layout_marginTop="12dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:id="@+id/upload_time"
-                android:textStyle="bold"/>
-
-            <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
                 android:src="@drawable/ic_play_circle_filled_black_18dp"
                 android:id="@+id/play_num_logo"
                 android:layout_below="@+id/video_name"
-                android:layout_toLeftOf="@id/play_num"
-                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@id/video_duration"
+                android:layout_marginLeft="40dp"
                 android:layout_marginTop="10dp"/>
 
             <TextView
@@ -99,9 +78,30 @@
                 android:layout_marginLeft="3dp"
                 android:layout_marginTop="12dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:layout_toRightOf="@+id/play_num_logo"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_file_upload_black_18dp"
+                android:id="@+id/upload_time_logo"
+                android:layout_toLeftOf="@+id/upload_time"
+                android:layout_below="@id/video_name"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/video_name"
                 android:layout_alignParentRight="true"
-                android:textStyle="bold"
-                android:layout_marginRight="3dp"/>
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="3dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:id="@+id/upload_time"
+                android:textStyle="bold"/>
+
+
 
 
 

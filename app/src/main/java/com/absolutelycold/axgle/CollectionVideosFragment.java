@@ -43,7 +43,7 @@ public class CollectionVideosFragment extends Fragment {
         LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_collections, container, false);
 
 
-        new AllVideosLoadTask().execute(0, 5);
+        new AllVideosLoadTask().execute(0, 20);
 
 
         refreshLayout = linearLayout.findViewById(R.id.pull_refresh_layout);
@@ -51,7 +51,7 @@ public class CollectionVideosFragment extends Fragment {
         refreshLayout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new AllVideosLoadTask().execute(0, 5);
+                new AllVideosLoadTask().execute(0, 20);
             }
         });
 

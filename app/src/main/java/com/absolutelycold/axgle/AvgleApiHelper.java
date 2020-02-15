@@ -24,6 +24,10 @@ public  class AvgleApiHelper {
 
 
     public static final Integer CONNECT_NORMAL = 200;
+    public static final String ORDER_LATEST = "mr";
+    public static final String ORDER_MOST_VIEWED = "mv";
+    public static final String ORDER_TOP_RATED = "tr";
+    public static final String ORDER_MOST_FAV = "mf";
 
 
 
@@ -161,13 +165,13 @@ public  class AvgleApiHelper {
     }
 
 
-    public static ArrayList<HashMap<String, Object>> allVideos(int page, int limit) {
+    public static ArrayList<HashMap<String, Object>> allVideos(int page, int limit, Integer CHID, String ordering) {
 
         int collectionsAIPGetCode;
         int coverGetCode;
         ArrayList<HashMap<String,Object>> allVideosInfo = new ArrayList<HashMap<String,Object>>();
 
-        String url = "https://api.avgle.com/v1/videos/" + page + "?limit=" + limit;
+        String url = "https://api.avgle.com/v1/videos/" + page + "?limit=" + limit + "&o=" + ordering + "&c=" + CHID;
 
 
 
@@ -187,6 +191,9 @@ public  class AvgleApiHelper {
                 String title = video.getString("title");
                 String keyword = video.getString("keyword");
                 String embeddedUrl = video.getString("embedded_url");
+                String videoUrl = video.getString("video_url");
+                String previewVideoUrl = video.getString("preview_video_url");
+
                 Integer duration = video.getInt("duration");
                 int hours = duration / 3600;
                 int minutes = (duration % 3600) / 60;
@@ -201,6 +208,7 @@ public  class AvgleApiHelper {
                 Integer viewNum = video.getInt("viewnumber");
                 Integer likesNum = video.getInt("likes");
                 Integer dislikeNum = video.getInt("dislikes");
+
                 //Bitmap bitmap = getImageBitmap(imgUrl);
 
                 HashMap hashMap = new HashMap();
@@ -213,6 +221,8 @@ public  class AvgleApiHelper {
                 hashMap.put("viewnum", viewNum);
                 hashMap.put("likes", likesNum);
                 hashMap.put("dislikes", dislikeNum);
+                hashMap.put("video_url", videoUrl);
+                hashMap.put("preview_video_url", previewVideoUrl);
 
                 allVideosInfo.add(hashMap);
 

@@ -10,26 +10,30 @@ public class AllVideos extends VideosInfo {
     public final Integer TYPE = 2;
     private Integer page;
     private Integer limit;
+    private Integer CHID;
+    private String order;
     private ArrayList<HashMap<String, Object>> allVideosInfo = null;
     private HashMap<Integer, Bitmap> bitmaps = new HashMap<>();
     private ArrayList<HashMap<String, Object>> tempAllVideosInfo = null;
 
 
-    public AllVideos(Integer page, Integer limit) {
+    public AllVideos(Integer page, Integer limit, Integer CHID, String order) {
         this.page = page;
         this.limit = limit;
+        this.CHID = CHID;
+        this.order = order;
         setType(CoverCardAdapter.VIEW_TYPE_ALL_VIDEOS);
-        ArrayList<HashMap<String, Object>> getData= AvgleApiHelper.allVideos(this.page, this.limit);
+        ArrayList<HashMap<String, Object>> getData= AvgleApiHelper.allVideos(this.page, this.limit, this.CHID, this.order);
         if (getData != null) {
             this.allVideosInfo = getData;
-            System.out.println("AllVideosInfo Created: " + allVideosInfo);
+            //System.out.println("AllVideosInfo Created: " + allVideosInfo);
         }
 
     }
 
     public void LoadMore() {
         page++;
-        tempAllVideosInfo = AvgleApiHelper.allVideos(page, limit);
+        tempAllVideosInfo = AvgleApiHelper.allVideos(page, limit, this.CHID, this.order);
         if (tempAllVideosInfo != null) {
             allVideosInfo.addAll(tempAllVideosInfo);
         }
