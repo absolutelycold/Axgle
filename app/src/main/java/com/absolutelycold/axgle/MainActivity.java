@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -163,6 +164,11 @@ public class MainActivity extends AppCompatActivity implements OrderDialogFragme
                 }else if (materialSearchBar.getVisibility() == View.VISIBLE) {
                     materialSearchBar.setVisibility(View.GONE);
                 }
+                break;
+            case R.id.give_me_a_star:
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("https://github.com/absolutelycold/Axgle"));
+                startActivity(intent);
                 break;
         }
         return super.onOptionsItemSelected(item);

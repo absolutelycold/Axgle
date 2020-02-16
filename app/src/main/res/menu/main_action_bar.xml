@@ -33,6 +33,12 @@
         android:title="@string/refresh_all"
         android:icon="@drawable/ic_autorenew_black_18dp"
         app:showAsAction="always"
+        android:orderInCategory="99"/>
+
+    <item android:id="@+id/give_me_a_star"
+        android:title="Give me a ⭐"
+        android:icon="@drawable/ic_autorenew_black_18dp"
+        app:showAsAction="never"
         android:orderInCategory="100"/>
 
 </menu>
