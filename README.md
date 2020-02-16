@@ -6,7 +6,8 @@ A simple, fast, beautiful and light android application to <del>Jerk off</del> h
 
 ![Preview_blur](Preview1_blur.jpg)
 
-<center><b><a herf="./Preview1.png">Not Blur Version (公共场所慎入)</b></a></center>
+[Not Blur Version (公共场所慎入)](./Preview1.png)
+
 Finished:
 
 ✔ Search Videos
