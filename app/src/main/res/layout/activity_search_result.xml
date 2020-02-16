@@ -6,9 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".SearchResultActivity">
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/result_view_pager"
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:id="@+id/search_result_container"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

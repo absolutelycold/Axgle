@@ -23,7 +23,6 @@ public class SearchResultActivity extends AppCompatActivity implements OrderDial
     MenuItem searchIcon;
     MenuItem backIcon;
     AllVideosFragment searchResultFragment;
-    ViewPager resultViewPager;
     private static final int CONTENT_VIEW_ID = 5200;
     private ArrayList<String> categoriesData = null;
     @Override
@@ -31,7 +30,6 @@ public class SearchResultActivity extends AppCompatActivity implements OrderDial
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_result);
         Intent intent = getIntent();
-        resultViewPager = findViewById(R.id.result_view_pager);
 
         searchContent = intent.getCharSequenceExtra("search_content").toString();
         categoriesData = intent.getStringArrayListExtra("categories_data");
@@ -39,18 +37,9 @@ public class SearchResultActivity extends AppCompatActivity implements OrderDial
         setTitle("Search: " + searchContent);
         searchResultFragment = AllVideosFragment.newInstance(AllVideosFragment.FRAGMENT_SEARCH, searchContent);
 
-        resultViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
-            @NonNull
-            @Override
-            public Fragment getItem(int position) {
-                return searchResultFragment;
-            }
-
-            @Override
-            public int getCount() {
-                return 1;
-            }
-        });
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.search_result_container, searchResultFragment);
+        fragmentTransaction.commit();
 
     }
 

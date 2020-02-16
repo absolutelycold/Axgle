@@ -1,11 +1,12 @@
 ![Logo](./logo.png)
 
-<b><font color = 'red'>FBI WARNING</font>: The Avgle V1 API is sometimes not stable. If you cannot connect to the sever, please try it again later/ refresh.</b>
+<b>FBI WARNING: The Avgle V1 API is sometimes not stable. If you cannot connect to the sever, please try it again later/ refresh.</b>
 
 A simple, fast, beautiful and light android application to <del>Jerk off</del> help you index to the definite website to watch the video.
 
-![Preview](Preview1.jpg)
+![Preview_blur](Preview1_blur.jpg)
 
+<center><b><a herf="./Preview1.png">Not Blur Version (公共场所慎入)</b></a></center>
 Finished:
 
 ✔ Search Videos

@@ -5,12 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/colorPrimary"
     tools:context=".MainActivity">
 
 
     <com.mancj.materialsearchbar.MaterialSearchBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:mt_hint="search videos or code here"
+        app:mt_maxSuggestionsCount="0"
+        app:mt_speechMode="false"
+        app:mt_placeholder="Click here to search"
         android:id="@+id/searchBar"
         android:visibility="gone"/>
 
