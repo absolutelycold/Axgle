@@ -211,9 +211,10 @@ public class AllVideos extends VideosInfo {
     }
 
     public Integer getTotalVideoNum() {
-        if (allVideosInfo == null) {
+        if (allVideosInfo == null | allVideosInfo.size() == 0) { // Not return || no result
             return 0;
         }
+
         return (Integer)allVideosInfo.get(0).get("total_videos");
     };
 
