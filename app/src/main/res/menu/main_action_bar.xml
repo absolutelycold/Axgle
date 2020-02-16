@@ -3,17 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-    <item android:id="@+id/action_category"
+    <item android:id="@+id/action_back"
         android:orderInCategory="1"
+        android:icon="@drawable/ic_arrow_back_black_18dp"
+        app:showAsAction="always"
+        android:title="Back"/>
+
+    <item android:id="@+id/action_category"
+        android:orderInCategory="2"
         android:title="Category"
         android:icon="@drawable/baseline_category_black_18"
         app:showAsAction="ifRoom"/>
 
+    <item android:id="@+id/action_search"
+        android:title="Search"
+        android:orderInCategory="3"
+        android:icon="@drawable/ic_search_black_18dp"
+        app:showAsAction="ifRoom"/>
+
     <item android:id="@+id/action_sort_all"
-        android:title="Sort All"
+        android:title="Sort"
         android:icon="@drawable/ic_sort_black_18dp"
         app:showAsAction="ifRoom"
-        android:orderInCategory="2"/>
+        android:orderInCategory="4"/>
 
     <item android:id="@+id/refresh_all_tab"
         android:title="@string/refresh_all"

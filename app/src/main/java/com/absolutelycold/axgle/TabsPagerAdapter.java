@@ -24,7 +24,7 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return new CollectionVideosFragment();
             case 1:
-                return new AllVideosFragment();
+                return AllVideosFragment.newInstance(AllVideosFragment.FRAGMENT_ALL, null);
             default:
                 return null;
         }

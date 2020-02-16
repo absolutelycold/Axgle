@@ -5,12 +5,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.google.android.material.tabs.TabLayout;
+import com.mancj.materialsearchbar.MaterialSearchBar;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,14 +23,38 @@ public class MainActivity extends AppCompatActivity implements OrderDialogFragme
     private ViewPager viewPager;
     private TabLayout tabLayout;
     private Fragment currentFragment;
+    private MaterialSearchBar materialSearchBar;
     private MenuItem refreshAllItem;
     private MenuItem sortAllItem;
     private MenuItem categoryItem;
+    private MenuItem search;
     private ArrayList<String> categoriesData = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        materialSearchBar = findViewById(R.id.searchBar);
+        materialSearchBar.setOnSearchActionListener(new MaterialSearchBar.OnSearchActionListener() {
+            @Override
+            public void onSearchStateChanged(boolean enabled) {
+
+            }
+
+            @Override
+            public void onSearchConfirmed(CharSequence text) {
+                System.out.println("Search Content:" + text);
+                Intent intent = new Intent(MainActivity.this, SearchResultActivity.class);
+                intent.putExtra("search_content", text);
+                intent.putStringArrayListExtra("categories_data", categoriesData);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onButtonClicked(int buttonCode) {
+
+            }
+        });
 
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         viewPager.setAdapter(new TabsPagerAdapter(getSupportFragmentManager()));
@@ -42,11 +69,13 @@ public class MainActivity extends AppCompatActivity implements OrderDialogFragme
                     refreshAllItem.setVisible(true);
                     sortAllItem.setVisible(true);
                     categoryItem.setVisible(true);
+                    //search.setVisible(true);
                 }
                 else {
                     refreshAllItem.setVisible(false);
                     sortAllItem.setVisible(false);
                     categoryItem.setVisible(false);
+                    //search.setVisible(false);
                 }
             }
 
@@ -91,9 +120,12 @@ public class MainActivity extends AppCompatActivity implements OrderDialogFragme
         sortAllItem = menu.findItem(R.id.action_sort_all);
         categoryItem = menu.findItem(R.id.action_category);
         refreshAllItem = menu.findItem(R.id.refresh_all_tab);
+        search = menu.findItem(R.id.action_search);
+        menu.findItem(R.id.action_back).setVisible(false);
         refreshAllItem.setVisible(false);
         sortAllItem.setVisible(false);
         categoryItem.setVisible(false);
+        //search.setVisible(false);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -124,7 +156,14 @@ public class MainActivity extends AppCompatActivity implements OrderDialogFragme
                     System.out.println("Bind Categories : " + categoriesData);
                     CategoryListDialogFragment.newInstance(categoriesData).show(getSupportFragmentManager(), CategoryListDialogFragment.TAG);
                 }
-
+                break;
+            case R.id.action_search:
+                if (materialSearchBar.getVisibility() == View.GONE) {
+                    materialSearchBar.setVisibility(View.VISIBLE);
+                }else if (materialSearchBar.getVisibility() == View.VISIBLE) {
+                    materialSearchBar.setVisibility(View.GONE);
+                }
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

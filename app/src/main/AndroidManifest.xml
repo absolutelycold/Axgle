@@ -11,9 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ShowVideoPreviewActivity"
-            android:screenOrientation="landscape"
-            android:parentActivityName=".MainActivity"></activity>
+        <activity android:name=".SearchResultActivity"></activity>
+        <activity
+            android:name=".ShowVideoPreviewActivity"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">

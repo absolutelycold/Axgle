@@ -15,6 +15,7 @@ public class AllVideos extends VideosInfo {
     private ArrayList<HashMap<String, Object>> allVideosInfo = null;
     private HashMap<Integer, Bitmap> bitmaps = new HashMap<>();
     private ArrayList<HashMap<String, Object>> tempAllVideosInfo = null;
+    private boolean isReachEnd = false;
 
 
     public AllVideos(Integer page, Integer limit, Integer CHID, String order) {
@@ -25,18 +26,35 @@ public class AllVideos extends VideosInfo {
         setType(CoverCardAdapter.VIEW_TYPE_ALL_VIDEOS);
         ArrayList<HashMap<String, Object>> getData= AvgleApiHelper.allVideos(this.page, this.limit, this.CHID, this.order);
         if (getData != null) {
-            this.allVideosInfo = getData;
+            setAllVideosInfo(getData);
+            //this.allVideosInfo = getData;
             //System.out.println("AllVideosInfo Created: " + allVideosInfo);
+        }
+
+        int totalVideos = getTotalVideoNum();
+        int remain = Math.abs(totalVideos - ((page + 1) * limit));
+        if (remain < limit) {
+            setReachEnd(true);
         }
 
     }
 
     public void LoadMore() {
-        page++;
-        tempAllVideosInfo = AvgleApiHelper.allVideos(page, limit, this.CHID, this.order);
-        if (tempAllVideosInfo != null) {
-            allVideosInfo.addAll(tempAllVideosInfo);
+
+        if (!isReachEnd()) {
+            page++;
+            int totalVideos = getTotalVideoNum();
+            int remain = Math.abs(totalVideos - (page * limit));
+            if (remain < limit) {
+                limit = remain;
+                isReachEnd = true;
+            }
+            tempAllVideosInfo = AvgleApiHelper.allVideos(page, limit, this.CHID, this.order);
+            if (tempAllVideosInfo != null) {
+                allVideosInfo.addAll(tempAllVideosInfo);
+            }
         }
+
     }
     @Override
     public String getTitle(int index) {
@@ -151,4 +169,60 @@ public class AllVideos extends VideosInfo {
     public void removeItem(int index) {
         allVideosInfo.remove(index);
     }
+
+    public void setPage(Integer page) {
+        this.page = page;
+    }
+
+    public void setLimit(Integer limit) {
+        this.limit = limit;
+    }
+
+    public void setCHID(Integer CHID) {
+        this.CHID = CHID;
+    }
+
+    public void setOrder(String order) {
+        this.order = order;
+    }
+
+    public void setAllVideosInfo(ArrayList<HashMap<String, Object>> allVideosInfo) {
+        this.allVideosInfo = allVideosInfo;
+    }
+
+    public Integer getPage() {
+        return page;
+    }
+
+    public Integer getLimit() {
+        return limit;
+    }
+
+    public Integer getCHID() {
+        return CHID;
+    }
+
+    public String getOrder() {
+        return order;
+    }
+
+    public ArrayList<HashMap<String, Object>> getAllVideosInfo() {
+        return allVideosInfo;
+    }
+
+    public Integer getTotalVideoNum() {
+        if (allVideosInfo == null) {
+            return 0;
+        }
+        return (Integer)allVideosInfo.get(0).get("total_videos");
+    };
+
+    public boolean isReachEnd() {
+        return isReachEnd;
+    }
+
+    public void setReachEnd(boolean reachEnd) {
+        isReachEnd = reachEnd;
+    }
+
 }

@@ -183,6 +183,7 @@ public  class AvgleApiHelper {
             }
             JSONObject json = new JSONObject(content);
             JSONObject response = json.getJSONObject("response");
+            Integer totalVideosNum = response.getInt("total_videos");
             JSONArray videos = response.getJSONArray("videos");
 
             for (int i = 0; i < videos.length(); i++) {
@@ -223,6 +224,7 @@ public  class AvgleApiHelper {
                 hashMap.put("dislikes", dislikeNum);
                 hashMap.put("video_url", videoUrl);
                 hashMap.put("preview_video_url", previewVideoUrl);
+                hashMap.put("total_videos", totalVideosNum);
 
                 allVideosInfo.add(hashMap);
 
@@ -235,6 +237,81 @@ public  class AvgleApiHelper {
 
         return allVideosInfo;
     }
+
+    public static ArrayList<HashMap<String, Object>> searchVideos(String searchContent, int page, int limit, Integer CHID, String ordering) {
+
+        int collectionsAIPGetCode;
+        int coverGetCode;
+        ArrayList<HashMap<String,Object>> allVideosInfo = new ArrayList<HashMap<String,Object>>();
+
+        String url = "https://api.avgle.com/v1/search/" + searchContent + "/" + page + "?limit=" + limit + "&o=" + ordering + "&c=" + CHID;
+        //String url = "https://api.avgle.com/v1/videos/" + page + "?limit=" + limit + "&o=" + ordering + "&c=" + CHID;
+
+
+
+        try {
+            String content = getURLContent(url);
+            if (content == null) {
+                collectionsAIPGetCode = 404;
+                return null;
+            }
+            JSONObject json = new JSONObject(content);
+            JSONObject response = json.getJSONObject("response");
+            Integer totalVideosNum = response.getInt("total_videos");
+            JSONArray videos = response.getJSONArray("videos");
+
+            for (int i = 0; i < videos.length(); i++) {
+                JSONObject video = videos.getJSONObject(i);
+                String previewPicUrl = video.getString("preview_url");
+                String title = video.getString("title");
+                String keyword = video.getString("keyword");
+                String embeddedUrl = video.getString("embedded_url");
+                String videoUrl = video.getString("video_url");
+                String previewVideoUrl = video.getString("preview_video_url");
+
+                Integer duration = video.getInt("duration");
+                int hours = duration / 3600;
+                int minutes = (duration % 3600) / 60;
+                int seconds = duration % 60;
+                String durationString = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+
+                Integer unixTimeStamp = video.getInt("addtime");
+                Date uploadDate = new Date((long) unixTimeStamp* 1000);
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss");
+                String updateTime = dateFormat.format(uploadDate);
+
+                Integer viewNum = video.getInt("viewnumber");
+                Integer likesNum = video.getInt("likes");
+                Integer dislikeNum = video.getInt("dislikes");
+
+                //Bitmap bitmap = getImageBitmap(imgUrl);
+
+                HashMap hashMap = new HashMap();
+                hashMap.put("title", title);
+                hashMap.put("preview_url", previewPicUrl);
+                hashMap.put("keyword", keyword);
+                hashMap.put("embedded_url", embeddedUrl);
+                hashMap.put("uploadTime", updateTime);
+                hashMap.put("duration", durationString);
+                hashMap.put("viewnum", viewNum);
+                hashMap.put("likes", likesNum);
+                hashMap.put("dislikes", dislikeNum);
+                hashMap.put("video_url", videoUrl);
+                hashMap.put("preview_video_url", previewVideoUrl);
+                hashMap.put("total_videos", totalVideosNum);
+
+                allVideosInfo.add(hashMap);
+
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return allVideosInfo;
+    }
+
 
     public static ArrayList<HashMap<String, Object>> getCategories() {
 

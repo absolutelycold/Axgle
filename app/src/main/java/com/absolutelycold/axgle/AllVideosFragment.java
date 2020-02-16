@@ -25,6 +25,9 @@ import com.baoyz.widget.PullRefreshLayout;
  */
 public class AllVideosFragment extends Fragment {
 
+    public static final int FRAGMENT_ALL = 0;
+    public static final int FRAGMENT_SEARCH = 1;
+
     private AllVideos allVideosInfo = null;
     private PullRefreshLayout pullRefreshLayout = null;
     private RecyclerView recyclerView = null;
@@ -32,28 +35,53 @@ public class AllVideosFragment extends Fragment {
     private boolean isRefreshing = false;
     private String order = "mr";
     private Integer CHID = null;
+    private int fragmentType;
+    private String searchContent;
 
     public AllVideosFragment() {
         // Required empty public constructor
     }
 
+    public static AllVideosFragment newInstance(int type, String searchContent) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("fragment_type", type);
+        bundle.putString("search_content", searchContent);
+        AllVideosFragment allVideosFragment = new AllVideosFragment();
+        allVideosFragment.setArguments(bundle);
+        return allVideosFragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_all_videos, container, false);
+        fragmentType = getArguments().getInt("fragment_type");
+        searchContent = getArguments().getString("search_content");
         pullRefreshLayout = (PullRefreshLayout) linearLayout.findViewById(R.id.all_videos_refresh);
         recyclerView = (RecyclerView) linearLayout.findViewById(R.id.all_videos_recylerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 
-        new LoadAllVideosInfoTask().execute(0, 20, CHID, order);
+        if (fragmentType == FRAGMENT_ALL) {
+            new LoadAllVideosInfoTask().execute(0, 20, CHID, order);
+        }
+        else {
+            new LoadAllVideosInfoTask().execute(searchContent, 0, 20, CHID, order);
+        }
+
 
         pullRefreshLayout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new LoadAllVideosInfoTask().execute(0, 20, CHID, order);
+
+                if (fragmentType == FRAGMENT_ALL) {
+                    new LoadAllVideosInfoTask().execute(0, 20, CHID, order);
+                }
+                else {
+                    new LoadAllVideosInfoTask().execute(searchContent, 0, 20, CHID, order);
+                }
+
             }
         });
 
@@ -74,7 +102,12 @@ public class AllVideosFragment extends Fragment {
         @Override
         protected Void doInBackground(Object... objects) {
             publishProgress();
-            allVideosInfo = new AllVideos((Integer) objects[0], (Integer) objects[1], (Integer) objects[2], (String) objects[3]);
+            if (fragmentType == FRAGMENT_ALL) {
+                allVideosInfo = new AllVideos((Integer) objects[0], (Integer) objects[1], (Integer) objects[2], (String) objects[3]);
+            }
+            else {
+                allVideosInfo = new VideoSearch((String)objects[0], (Integer) objects[1], (Integer) objects[2], (Integer) objects[3], (String) objects[4]);
+            }
             return null;
         }
 
@@ -99,6 +132,7 @@ public class AllVideosFragment extends Fragment {
             });
 
             recyclerView.setAdapter(coverCardAdapter);
+            recyclerView.getAdapter().notifyDataSetChanged();
             InitRecyclerViewListener();
             pullRefreshLayout.setRefreshing((false));
             isRefreshing = false;
@@ -119,10 +153,23 @@ public class AllVideosFragment extends Fragment {
                 if (!isLoading) {
                     if (linearLayoutManager != null && linearLayoutManager.findLastVisibleItemPosition() == allVideosInfo.ItemsCount() - 1) {
                         isLoading = true;
+
                         AllVideos allVideos = (AllVideos) ((CoverCardAdapter)recyclerView.getAdapter()).getVideoInfos();
+
                         allVideos.addItem(null);
                         recyclerView.getAdapter().notifyItemInserted(allVideos.ItemsCount() - 1);
-                        new LoadMoreVideosTask().execute();
+
+                        System.out.println("Is Reash End??: " + allVideos.isReachEnd());
+                        if (!allVideos.isReachEnd()) {
+                            new LoadMoreVideosTask().execute();
+                        }
+                        else {
+                            int beforeAddItemCount = allVideosInfo.ItemsCount();
+                            allVideosInfo.removeItem(beforeAddItemCount - 1);
+                            recyclerView.getAdapter().notifyItemRemoved(beforeAddItemCount);
+                            recyclerView.getAdapter().notifyDataSetChanged();
+                            isLoading = false;
+                        }
                     }
                 }
             }
@@ -156,20 +203,35 @@ public class AllVideosFragment extends Fragment {
 
     public void refreshAll() {
         recyclerView.scrollToPosition(0);
-        new LoadAllVideosInfoTask().execute(0, 20, CHID, order);
+        if (fragmentType == FRAGMENT_ALL) {
+            new LoadAllVideosInfoTask().execute(0, 20, CHID, order);
+        }
+        else {
+            new LoadAllVideosInfoTask().execute(searchContent, 0, 20, CHID, order);
+        }
     }
 
     public void refreshUsingNewOrder(String order) {
         this.order = order;
         recyclerView.scrollToPosition(0);
-        new LoadAllVideosInfoTask().execute(0, 20, CHID, this.order);
+        if (fragmentType == FRAGMENT_ALL) {
+            new LoadAllVideosInfoTask().execute(0, 20, CHID, order);
+        }
+        else {
+            new LoadAllVideosInfoTask().execute(searchContent, 0, 20, CHID, order);
+        }
     }
 
     public void refreshUsingNewCHID(Integer CHID) {
         //System.out.println("Select CHID: " + CHID);
         this.CHID = CHID;
         recyclerView.scrollToPosition(0);
-        new LoadAllVideosInfoTask().execute(0, 20, this.CHID, this.order);
+        if (fragmentType == FRAGMENT_ALL) {
+            new LoadAllVideosInfoTask().execute(0, 20, CHID, order);
+        }
+        else {
+            new LoadAllVideosInfoTask().execute(searchContent, 0, 20, CHID, order);
+        }
     }
 
     public RecyclerView getRecyclerView() {
