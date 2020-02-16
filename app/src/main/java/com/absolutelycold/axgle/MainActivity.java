@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements OrderDialogFragme
                     String categoryText = (String)singleCategory.get("name") + " : " + singleCategory.get("total_videos");
                     categoriesData.add(categoryText);
                 }
-                categoriesData.add("All : too many");
+                categoriesData.add("All・全部 : too many");
             }
             super.onPostExecute(arrayList);
         }
@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity implements OrderDialogFragme
         TabLayout.Tab tab = tabLayout.getTabAt(1);
         if (position == categoriesData.size() - 1) {
             ((AllVideosFragment)currentFragment).refreshUsingNewCHID(null);
-            tab.setText("All");
+            tab.setText("All・全部");
         }
         else {
             ((AllVideosFragment)currentFragment).refreshUsingNewCHID(position + 1);

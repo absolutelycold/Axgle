@@ -10,7 +10,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 public class TabsPagerAdapter extends FragmentPagerAdapter {
 
-    private String[] tabs = {"Collections", "All"};
+    private String[] tabs = {"Collections", "All・全部"};
     private Fragment currentFragment = null;
 
     public TabsPagerAdapter(@NonNull FragmentManager fm) {
