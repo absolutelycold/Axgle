@@ -20,6 +20,20 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_above="@id/video_preview"
+        app:borderWidth="0dp"
+        android:backgroundTint="@color/colorPrimary"
         android:src="@drawable/ic_format_list_bulleted_black_18dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/preview_back_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_above="@id/video_preview"
+        app:borderWidth="0dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:src="@drawable/ic_arrow_back_black_18dp" />
 
 </RelativeLayout>

@@ -26,6 +26,7 @@ public class ShowVideoPreviewActivity extends AppCompatActivity implements Order
     View decorView;
     ArrayList<String> fabOptions = new ArrayList<>();
     FloatingActionButton floatingActionButton;
+    FloatingActionButton backFAB;
     OrderDialogFragment orderDialogFragment;
 
     @Override
@@ -60,6 +61,13 @@ public class ShowVideoPreviewActivity extends AppCompatActivity implements Order
         fabOptions.add("Back");
 
 
+        backFAB = findViewById(R.id.preview_back_fab);
+        backFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         floatingActionButton = findViewById(R.id.preview_fab);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
