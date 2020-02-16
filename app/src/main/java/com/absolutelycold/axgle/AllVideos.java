@@ -122,6 +122,28 @@ public class AllVideos extends VideosInfo {
         return (String) allVideosInfo.get(index).get("preview_url");
     }
 
+    public String getPreviewUrl(int index) {
+        if (index >= allVideosInfo.size()) {
+            return null;
+        }
+        return (String)allVideosInfo.get(index).get("preview_video_url");
+    }
+
+    public  String getVideoUrl(int index) {
+        if (index >= allVideosInfo.size()) {
+            return null;
+        }
+        return (String)allVideosInfo.get(index).get("video_url");
+    }
+
+    public String getEmbeddedVideoUrl(int index) {
+        if (index >= allVideosInfo.size()) {
+            return null;
+        }
+
+        return (String)allVideosInfo.get(index).get("embedded_url");
+    }
+
     public void addItem(HashMap hashMap) {
         allVideosInfo.add(hashMap);
     }

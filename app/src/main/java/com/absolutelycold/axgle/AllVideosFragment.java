@@ -1,6 +1,7 @@
 package com.absolutelycold.axgle;
 
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -46,6 +47,7 @@ public class AllVideosFragment extends Fragment {
         recyclerView = (RecyclerView) linearLayout.findViewById(R.id.all_videos_recylerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+
         new LoadAllVideosInfoTask().execute(0, 20, CHID, order);
 
         pullRefreshLayout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
@@ -84,7 +86,19 @@ public class AllVideosFragment extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            recyclerView.setAdapter(new CoverCardAdapter(allVideosInfo));
+            CoverCardAdapter coverCardAdapter = new CoverCardAdapter(allVideosInfo);
+            coverCardAdapter.SetAllVideoListener(new CoverCardAdapter.AllVideoListener() {
+                @Override
+                public void onSingleVideoChoose(int position) {
+                    Intent intent = new Intent(getActivity(), ShowVideoPreviewActivity.class);
+                    intent.putExtra("preview_url", allVideosInfo.getPreviewUrl(position));
+                    intent.putExtra("video_url",allVideosInfo.getVideoUrl(position));
+                    intent.putExtra("video_embedded_url", allVideosInfo.getEmbeddedVideoUrl(position));
+                    startActivity(intent);
+                }
+            });
+
+            recyclerView.setAdapter(coverCardAdapter);
             InitRecyclerViewListener();
             pullRefreshLayout.setRefreshing((false));
             isRefreshing = false;

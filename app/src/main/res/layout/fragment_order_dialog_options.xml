@@ -11,4 +11,5 @@
     android:paddingBottom="@dimen/list_item_spacing_half"
     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
     android:textStyle="bold"
+    android:gravity="center"
     tools:text="Hello" />

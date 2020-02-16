@@ -25,6 +25,7 @@ public class CoverCardAdapter extends RecyclerView.Adapter {
     public static final int VIEW_TYPE_ALL_VIDEOS = 2;
     private int num = 0;
 
+    private AllVideoListener allVideoListener;
     private Bitmap bitmap_404;
 
     //private VideoCollection videoCollection = null;
@@ -106,7 +107,7 @@ public class CoverCardAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof CardViewHolder) {
             if (videosInfo.TYPE == VIEW_TYPE_COLLECTIONS) {
                 CardView cardView = ((CardViewHolder)holder).cardView;
@@ -194,6 +195,12 @@ public class CoverCardAdapter extends RecyclerView.Adapter {
 
                 imageView.setImageBitmap(coverBitmap);
                 imageView.setContentDescription(videosInfo.getTitle(position));
+                cardView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        allVideoListener.onSingleVideoChoose(position);
+                    }
+                });
 
             }
 
@@ -203,6 +210,14 @@ public class CoverCardAdapter extends RecyclerView.Adapter {
         }
 
 
+    }
+
+    public interface AllVideoListener {
+        void onSingleVideoChoose(int position);
+    }
+
+    public void SetAllVideoListener(AllVideoListener allVideoListener) {
+        this.allVideoListener = allVideoListener;
     }
 
     public VideosInfo getVideoInfos() {
