@@ -8,6 +8,8 @@ A simple, fast, beautiful and light android application to <del>Jerk off</del> h
 
 [Not Blur Version (公共场所慎入)](./Preview1.png)
 
+[Click Here To Download (点击这里下载APK) -- Version:Test](./app/build/outputs/apk/debug/app-debug.apk)
+
 Finished:
 
 ✔ Search Videos
