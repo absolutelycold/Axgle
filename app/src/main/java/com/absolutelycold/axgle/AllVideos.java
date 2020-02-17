@@ -114,6 +114,27 @@ public class AllVideos extends VideosInfo {
         }
         return (String)allVideosInfo.get(index).get("uploadTime");
     }
+
+    public Integer getLikeNumber(int index) {
+        if (index >= allVideosInfo.size()) {
+            return null;
+        }
+        return (Integer) allVideosInfo.get(index).get("likes");
+    }
+
+    public Integer getDislikeNumber(int index) {
+        if (index >= allVideosInfo.size()) {
+            return null;
+        }
+        return (Integer) allVideosInfo.get(index).get("dislikes");
+    }
+
+    public Boolean getIsHD(int index) {
+        if (index >= allVideosInfo.size()) {
+            return null;
+        }
+        return (Boolean) allVideosInfo.get(index).get("hd");
+    }
     @Override
     public Integer getVideoCount(int index) {
         return null;

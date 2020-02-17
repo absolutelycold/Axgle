@@ -5,4 +5,8 @@
     <color name="colorPrimaryDark">#FFFFFF</color>
     <color name="colorAccent">#D81B60</color>
     <color name="white">#FFFFFF</color>
+    <color name="lightSkyBlue">#87CEFA	</color>
+    <color name="gray">#696969</color>
+    <color name="ivory">#FFFFF0</color>
+    <color name="navajowhite">#FFDEAD</color>
 </resources>

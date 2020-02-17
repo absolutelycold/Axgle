@@ -110,7 +110,7 @@ public class CoverCardAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof CardViewHolder) {
-            if (videosInfo.TYPE == VIEW_TYPE_COLLECTIONS) {
+            if (videosInfo.TYPE == VIEW_TYPE_COLLECTIONS) { // if current fragment is Collection fragment, go into this if
                 final CardView cardView = ((CardViewHolder)holder).cardView;
                 TextView coverName = cardView.findViewById(R.id.cover_name);
                 coverName.setText(((VideoCollection)videosInfo).getTitle(position));
@@ -169,7 +169,7 @@ public class CoverCardAdapter extends RecyclerView.Adapter {
 
                 imageView.setImageBitmap(coverBitmap);
                 imageView.setContentDescription(((VideoCollection)videosInfo).getTitle(position));
-            }else {
+            }else {  // if current fragment is AllVideosFragment, go into this if
                 CardView cardView = ((CardViewHolder)holder).cardView;
 
                 TextView videoName = cardView.findViewById(R.id.video_name);
@@ -182,6 +182,20 @@ public class CoverCardAdapter extends RecyclerView.Adapter {
                 TextView playNumView = cardView.findViewById(R.id.play_num);
                 playNumView.setText(((AllVideos)videosInfo).getTotalViews(position).toString());
                 //HashMap<String, Object> collectionItem = ((AllVideos)videosInfo).getItem(position);
+                ImageView hdImage = cardView.findViewById(R.id.hd_pic);
+                if (((AllVideos) videosInfo).getIsHD(position)) {
+                    hdImage.setVisibility(View.VISIBLE);
+                }
+                else {
+                    hdImage.setVisibility(View.GONE);
+                }
+                Integer likeNum  = ((AllVideos) videosInfo).getLikeNumber(position);
+                Integer dislikeNum = ((AllVideos) videosInfo).getDislikeNumber(position);
+                TextView likeTextView = cardView.findViewById(R.id.like_num);
+                likeTextView.setText(likeNum.toString());
+                TextView dislikeTextView = cardView.findViewById(R.id.dislike_num);
+                dislikeTextView.setText(dislikeNum.toString());
+
                 ProgressBar coverLoadCircle = (ProgressBar)cardView.findViewById(R.id.all_video_load_circle);
                 Bitmap coverBitmap = videosInfo.getCoverBitmap(position);
 

@@ -206,6 +206,7 @@ public  class AvgleApiHelper {
                 DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss");
                 String updateTime = dateFormat.format(uploadDate);
 
+                Boolean isHD = video.getBoolean("hd");
                 Integer viewNum = video.getInt("viewnumber");
                 Integer likesNum = video.getInt("likes");
                 Integer dislikeNum = video.getInt("dislikes");
@@ -225,6 +226,7 @@ public  class AvgleApiHelper {
                 hashMap.put("video_url", videoUrl);
                 hashMap.put("preview_video_url", previewVideoUrl);
                 hashMap.put("total_videos", totalVideosNum);
+                hashMap.put("hd", isHD);
 
                 allVideosInfo.add(hashMap);
 
@@ -280,6 +282,7 @@ public  class AvgleApiHelper {
                 DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss");
                 String updateTime = dateFormat.format(uploadDate);
 
+                Boolean isHD = video.getBoolean("hd");
                 Integer viewNum = video.getInt("viewnumber");
                 Integer likesNum = video.getInt("likes");
                 Integer dislikeNum = video.getInt("dislikes");
@@ -299,6 +302,7 @@ public  class AvgleApiHelper {
                 hashMap.put("video_url", videoUrl);
                 hashMap.put("preview_video_url", previewVideoUrl);
                 hashMap.put("total_videos", totalVideosNum);
+                hashMap.put("hd", isHD);
 
                 allVideosInfo.add(hashMap);
 

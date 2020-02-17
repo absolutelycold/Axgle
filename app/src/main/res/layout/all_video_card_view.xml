@@ -26,7 +26,60 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="105dp"
                 android:id="@+id/all_video_load_circle"
-                android:visibility="visible"/>
+                android:visibility="visible" />
+
+
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="30dp"
+                android:layout_margin="10dp"
+                android:id="@+id/hd_pic"
+                android:src="@drawable/ic_hd_black_18dp"
+                android:tint="@color/white"/>
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_thumb_up_black_18dp"
+                android:id="@+id/thumb_up_image"
+                android:layout_toLeftOf="@+id/like_num"
+                android:layout_alignTop="@+id/dislike_num"
+                android:tint="@color/white"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/like_num"
+                android:text="1000"
+                android:layout_marginRight="20dp"
+                android:layout_toLeftOf="@+id/thumb_down_image"
+                android:layout_alignTop="@+id/dislike_num"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textStyle="bold"
+                android:padding="3dp"
+                android:textColor="@color/white"/>
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_thumb_down_black_18dp"
+                android:id="@+id/thumb_down_image"
+                android:layout_toLeftOf="@+id/dislike_num"
+                android:layout_alignTop="@+id/dislike_num"
+                android:tint="@color/white"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/dislike_num"
+                android:text="1000"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="200dp"
+                android:padding="3dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textStyle="bold"
+                android:textColor="@color/white"/>
 
             <TextView
                 android:layout_width="wrap_content"
