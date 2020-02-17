@@ -187,7 +187,13 @@ public class AllVideosFragment extends Fragment {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            allVideosInfo.LoadMore();
+            if (fragmentType == FRAGMENT_ALL) {
+                allVideosInfo.LoadMore();
+            }
+            else {
+                allVideosInfo.LoadMoreSearch(searchContent);
+            }
+
             return  null;
         }
 

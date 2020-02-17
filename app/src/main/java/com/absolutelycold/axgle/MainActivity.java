@@ -44,9 +44,10 @@ public class MainActivity extends AppCompatActivity implements OrderDialogFragme
 
             @Override
             public void onSearchConfirmed(CharSequence text) {
-                System.out.println("Search Content:" + text);
+                //System.out.println("Search Content:" + text);
+                String searchContent = text.toString();
                 Intent intent = new Intent(MainActivity.this, SearchResultActivity.class);
-                intent.putExtra("search_content", text);
+                intent.putExtra("search_content", searchContent);
                 intent.putStringArrayListExtra("categories_data", categoriesData);
                 startActivity(intent);
             }

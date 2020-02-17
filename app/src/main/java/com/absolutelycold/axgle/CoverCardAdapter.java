@@ -1,5 +1,6 @@
 package com.absolutelycold.axgle;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -107,23 +108,31 @@ public class CoverCardAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof CardViewHolder) {
             if (videosInfo.TYPE == VIEW_TYPE_COLLECTIONS) {
-                CardView cardView = ((CardViewHolder)holder).cardView;
+                final CardView cardView = ((CardViewHolder)holder).cardView;
                 TextView coverName = cardView.findViewById(R.id.cover_name);
                 coverName.setText(((VideoCollection)videosInfo).getTitle(position));
                 TextView totalView = cardView.findViewById(R.id.total_view);
                 totalView.setText(((VideoCollection)videosInfo).getTotalViews(position).toString());
                 TextView videoNum = cardView.findViewById(R.id.video_num);
                 videoNum.setText(((VideoCollection)videosInfo).getVideoCount(position).toString());
+                cardView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String collectionKeyword = videosInfo.getKeyword(position);
+                        Intent intent = new Intent(cardView.getContext(), SearchResultActivity.class);
+                        intent.putExtra("search_content", collectionKeyword);
+                        cardView.getContext().startActivity(intent);
+                    }
+                });
 
                 ImageView imageView = (ImageView)cardView.findViewById(R.id.cover_image);
                 //HashMap<String, Object> collectionItem = ((VideoCollection)videosInfo).getItem(position);
                 ProgressBar coverLoadCircle = (ProgressBar)cardView.findViewById(R.id.cover_load_circle);
                 Bitmap coverBitmap = ((VideoCollection)videosInfo).getCoverBitmap(position);
                 GetCoverFromURLTask getCoverFromURLTask = new GetCoverFromURLTask(((VideoCollection)videosInfo), position);
-
 
                 //get the 404 pic from drawable
                 //Bitmap bitmap_404 = BitmapFactory.decodeResource(imageView.getContext().getResources(), R.drawable.axgle_404_cover);

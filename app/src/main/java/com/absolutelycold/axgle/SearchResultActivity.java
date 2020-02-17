@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,16 +26,25 @@ public class SearchResultActivity extends AppCompatActivity implements OrderDial
     AllVideosFragment searchResultFragment;
     private static final int CONTENT_VIEW_ID = 5200;
     private ArrayList<String> categoriesData = null;
+    private ArrayList<String> categoriesDataWithoutNum = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_result);
         Intent intent = getIntent();
 
-        searchContent = intent.getCharSequenceExtra("search_content").toString();
+        searchContent = intent.getStringExtra("search_content");
         categoriesData = intent.getStringArrayListExtra("categories_data");
+
+        if (categoriesData != null) {
+            categoriesDataWithoutNum = new ArrayList<>();
+            for (String singleCategory : categoriesData) {
+                categoriesDataWithoutNum.add(singleCategory.split(":")[0]);
+            }
+        }
+
         //System.out.println("SearchResultActivity: " + searchContent);
-        setTitle("Search: " + searchContent);
+        setTitle(":" + searchContent);
         searchResultFragment = AllVideosFragment.newInstance(AllVideosFragment.FRAGMENT_SEARCH, searchContent);
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -48,7 +58,10 @@ public class SearchResultActivity extends AppCompatActivity implements OrderDial
         getMenuInflater().inflate(R.menu.main_action_bar, menu);
         searchIcon = menu.findItem(R.id.action_search);
         searchIcon.setVisible(false);
-        menu.findItem(R.id.action_category).setVisible(false);
+        //menu.findItem(R.id.action_category).setVisible(false);
+        if (categoriesData == null) {
+            menu.findItem(R.id.action_category).setVisible(false);
+        }
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -67,15 +80,20 @@ public class SearchResultActivity extends AppCompatActivity implements OrderDial
                 OrderDialogFragment.newInstance(order_options).show(getSupportFragmentManager(), OrderDialogFragment.TAG);
                 break;
             case R.id.action_category:
-                if (categoriesData == null) {
+                if (categoriesDataWithoutNum == null) {
                     CategoryListDialogFragment.newInstance(null).show(getSupportFragmentManager(), CategoryListDialogFragment.TAG);
                 }
                 else {
-                    CategoryListDialogFragment.newInstance(categoriesData).show(getSupportFragmentManager(), CategoryListDialogFragment.TAG);
+                    CategoryListDialogFragment.newInstance(categoriesDataWithoutNum).show(getSupportFragmentManager(), CategoryListDialogFragment.TAG);
                 }
                 break;
             case R.id.action_back:
                 finish();
+                break;
+            case R.id.give_me_a_star:
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("https://github.com/absolutelycold/axgle"));
+                startActivity(intent);
                 break;
         }
         return super.onOptionsItemSelected(item);

@@ -105,6 +105,7 @@ public class ShowVideoPreviewActivity extends AppCompatActivity implements Order
             @Override
             public void onPrepared(MediaPlayer mediaPlayer) {
                 mediaPlayer.setLooping(true);
+                mediaPlayer.setVolume(0, 0);
             }
         });
         videoView.start();

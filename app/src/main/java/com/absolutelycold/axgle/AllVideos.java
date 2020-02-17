@@ -56,6 +56,26 @@ public class AllVideos extends VideosInfo {
         }
 
     }
+
+    public void LoadMoreSearch(String searchContent) {
+
+        if (!isReachEnd()) {
+            page++;
+            int totalVideos = getTotalVideoNum();
+            int remain = Math.abs(totalVideos - (page * limit));
+            if (remain < limit) {
+                limit = remain;
+                isReachEnd = true;
+            }
+            tempAllVideosInfo = AvgleApiHelper.searchVideos(searchContent, page, limit, CHID, order);
+            //tempAllVideosInfo = AvgleApiHelper.allVideos(page, limit, this.CHID, this.order);
+            if (tempAllVideosInfo != null) {
+                allVideosInfo.addAll(tempAllVideosInfo);
+            }
+        }
+
+    }
+
     @Override
     public String getTitle(int index) {
         if (index >= allVideosInfo.size()) {

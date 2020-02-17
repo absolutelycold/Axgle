@@ -14,11 +14,15 @@ Finished:
 
 ✔ Show all videos
 
+✔ Open each collection
+
 ✔ A sketched cool UI
 
 ✔ Watch Video's Preview Video
 
 ✔ Jump to the official website to watch the full video
+
+✔ Jump to the video embedded url to watch the video
 
 ✔ Video Collections Information shown in the home page
 
@@ -30,12 +34,8 @@ Finished:
 
 Not Finished Yet:
 
-✖ Open a collection (After search)
+✖ Safe Mode (Blur all the pictures), ASAP
 
-✖ Safe Mode (Blur all the pictures)
-
-✖ Collect favorite videos in the local database (Last do that)
-
-✖ Jump to the video embedded url to watch the video (In a hurry)
+✖ Collect favorite videos in the local database (ASAP)
 
 ✖ <del>Watch/Download videos (If someone provide me java library for capturing the m3u8 video from video page)</del> **I know this option may break the rules of the Avgle, so if someone provide me such a library, I will not publish it. However, I will do it in another branch.**
