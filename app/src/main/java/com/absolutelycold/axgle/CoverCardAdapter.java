@@ -1,5 +1,6 @@
 package com.absolutelycold.axgle;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,6 +18,8 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.vansuita.gaussianblur.GaussianBlur;
+
 import java.util.HashMap;
 
 public class CoverCardAdapter extends RecyclerView.Adapter {
@@ -25,6 +28,7 @@ public class CoverCardAdapter extends RecyclerView.Adapter {
     public static final int VIEW_TYPE_LOADING = 1;
     public static final int VIEW_TYPE_ALL_VIDEOS = 2;
     private int num = 0;
+    private Boolean needBlur;
 
     private AllVideoListener allVideoListener;
     private Bitmap bitmap_404;
@@ -33,8 +37,9 @@ public class CoverCardAdapter extends RecyclerView.Adapter {
     private VideosInfo videosInfo = null;
 
 
-    public CoverCardAdapter(VideosInfo vc) {
+    public CoverCardAdapter(VideosInfo vc, Boolean needBlur) {
         //this.videoCollection = (VideoCollection)vc;
+        this.needBlur = needBlur;
         this.videosInfo = vc;
     }
 
@@ -124,6 +129,7 @@ public class CoverCardAdapter extends RecyclerView.Adapter {
                         String collectionKeyword = videosInfo.getKeyword(position);
                         Intent intent = new Intent(cardView.getContext(), SearchResultActivity.class);
                         intent.putExtra("search_content", collectionKeyword);
+                        intent.putExtra("needBlur", needBlur);
                         cardView.getContext().startActivity(intent);
                     }
                 });
@@ -132,6 +138,7 @@ public class CoverCardAdapter extends RecyclerView.Adapter {
                 //HashMap<String, Object> collectionItem = ((VideoCollection)videosInfo).getItem(position);
                 ProgressBar coverLoadCircle = (ProgressBar)cardView.findViewById(R.id.cover_load_circle);
                 Bitmap coverBitmap = ((VideoCollection)videosInfo).getCoverBitmap(position);
+                System.out.println("Is Blur: " + needBlur);
                 GetCoverFromURLTask getCoverFromURLTask = new GetCoverFromURLTask(((VideoCollection)videosInfo), position);
 
                 //get the 404 pic from drawable
@@ -155,7 +162,7 @@ public class CoverCardAdapter extends RecyclerView.Adapter {
                 if (coverBitmap == null) {
                     // no cover, not visit the website yet
                     coverLoadCircle.setVisibility(View.VISIBLE);
-                    getCoverFromURLTask.execute();
+                    getCoverFromURLTask.execute(cardView.getContext());
                 }
                 else {
                     // load cover success
@@ -199,12 +206,13 @@ public class CoverCardAdapter extends RecyclerView.Adapter {
                 ProgressBar coverLoadCircle = (ProgressBar)cardView.findViewById(R.id.all_video_load_circle);
                 Bitmap coverBitmap = videosInfo.getCoverBitmap(position);
 
+                System.out.println("Is Blur: " + needBlur);
                 GetCoverFromURLTask getCoverFromURLTask = new GetCoverFromURLTask(videosInfo, position);
 
                 if (coverBitmap == null) {
                     // no cover, not visit the website yet
                     coverLoadCircle.setVisibility(View.VISIBLE);
-                    getCoverFromURLTask.execute();
+                    getCoverFromURLTask.execute(cardView.getContext());
                 }
                 else {
                     // load cover success
@@ -247,7 +255,7 @@ public class CoverCardAdapter extends RecyclerView.Adapter {
         return this.videosInfo;
     }
 
-    public class GetCoverFromURLTask extends AsyncTask<Void, Void, Bitmap> {
+    public class GetCoverFromURLTask extends AsyncTask<Context, Void, Bitmap> {
 
         //VideoCollection videoCollection = null;
         VideosInfo videosInfo = null;
@@ -263,12 +271,17 @@ public class CoverCardAdapter extends RecyclerView.Adapter {
         }
 
         @Override
-        protected Bitmap doInBackground(Void... items) {
+        protected Bitmap doInBackground(Context... items) {
             HashMap<String, Object> bitmapBundle = AvgleApiHelper.getImageBitmap(videosInfo.getCoverUrl(position));
 
 
             if (bitmapBundle != null) {
                 bitmap = (Bitmap) bitmapBundle.get("bitmap");
+                if (bitmap != null) {
+                    if (needBlur) {
+                        bitmap = GaussianBlur.with(items[0]).size(150).radius(20).render(bitmap);
+                    }
+                }
                 statusCode = (Integer)bitmapBundle.get("code");
                 System.out.println(position + " : " + statusCode );
             }

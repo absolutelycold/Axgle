@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <group>
+                <item
+                    android:id="@+id/blur_toggle_button"
+                    android:title="Blur Cover"
+                    app:actionLayout="@layout/switch_item" />
+        </group>
+
+        <group>
+                <item
+                    android:id="@+id/show_status_bar_text"
+                    android:title="Display Time"
+                    app:actionLayout="@layout/switch_item"/>
+        </group>
+
+
+
+
+</menu>

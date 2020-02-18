@@ -2,6 +2,7 @@ package com.absolutelycold.axgle;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.BlurMaskFilter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,6 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+
 
 public  class AvgleApiHelper {
 
@@ -97,6 +99,7 @@ public  class AvgleApiHelper {
             if (current_collection_cover_code == CONNECT_NORMAL) {
                 InputStream inputStream = connection.getInputStream();
                 Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                //Bitmap blurBitmap = ImageUtil.fastBlur(bitmap, 40);
                 bitmapBundle.put("bitmap", bitmap);
                 return bitmapBundle;
             }

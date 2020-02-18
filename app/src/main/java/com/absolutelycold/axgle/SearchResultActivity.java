@@ -27,6 +27,7 @@ public class SearchResultActivity extends AppCompatActivity implements OrderDial
     private static final int CONTENT_VIEW_ID = 5200;
     private ArrayList<String> categoriesData = null;
     private ArrayList<String> categoriesDataWithoutNum = null;
+    private Boolean needBlur;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +36,7 @@ public class SearchResultActivity extends AppCompatActivity implements OrderDial
 
         searchContent = intent.getStringExtra("search_content");
         categoriesData = intent.getStringArrayListExtra("categories_data");
+        needBlur = intent.getExtras().getBoolean("needBlur");
 
         if (categoriesData != null) {
             categoriesDataWithoutNum = new ArrayList<>();
@@ -45,7 +47,7 @@ public class SearchResultActivity extends AppCompatActivity implements OrderDial
 
         //System.out.println("SearchResultActivity: " + searchContent);
         setTitle(":" + searchContent);
-        searchResultFragment = AllVideosFragment.newInstance(AllVideosFragment.FRAGMENT_SEARCH, searchContent);
+        searchResultFragment = AllVideosFragment.newInstance(AllVideosFragment.FRAGMENT_SEARCH, searchContent, needBlur);
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.search_result_container, searchResultFragment);

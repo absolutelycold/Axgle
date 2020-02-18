@@ -37,15 +37,17 @@ public class AllVideosFragment extends Fragment {
     private Integer CHID = null;
     private int fragmentType;
     private String searchContent;
+    private Boolean needBlur;
 
     public AllVideosFragment() {
         // Required empty public constructor
     }
 
-    public static AllVideosFragment newInstance(int type, String searchContent) {
+    public static AllVideosFragment newInstance(int type, String searchContent, Boolean needBlur) {
         Bundle bundle = new Bundle();
         bundle.putInt("fragment_type", type);
         bundle.putString("search_content", searchContent);
+        bundle.putBoolean("need_blur", needBlur);
         AllVideosFragment allVideosFragment = new AllVideosFragment();
         allVideosFragment.setArguments(bundle);
         return allVideosFragment;
@@ -58,6 +60,7 @@ public class AllVideosFragment extends Fragment {
         LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_all_videos, container, false);
         fragmentType = getArguments().getInt("fragment_type");
         searchContent = getArguments().getString("search_content");
+        needBlur = getArguments().getBoolean("need_blur");
         pullRefreshLayout = (PullRefreshLayout) linearLayout.findViewById(R.id.all_videos_refresh);
         recyclerView = (RecyclerView) linearLayout.findViewById(R.id.all_videos_recylerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -119,7 +122,7 @@ public class AllVideosFragment extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            CoverCardAdapter coverCardAdapter = new CoverCardAdapter(allVideosInfo);
+            CoverCardAdapter coverCardAdapter = new CoverCardAdapter(allVideosInfo, needBlur);
             coverCardAdapter.SetAllVideoListener(new CoverCardAdapter.AllVideoListener() {
                 @Override
                 public void onSingleVideoChoose(int position) {
@@ -242,5 +245,9 @@ public class AllVideosFragment extends Fragment {
 
     public RecyclerView getRecyclerView() {
         return recyclerView;
+    }
+
+    public void setNeedBlur(Boolean needBlur) {
+        this.needBlur = needBlur;
     }
 }

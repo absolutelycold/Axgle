@@ -1,42 +1,34 @@
 ![Logo](./logo.png)
 
+---
+
 <b>FBI WARNING: The Avgle V1 API is sometimes not stable. If you cannot connect to the sever, please try it again later/ refresh.</b>
 
 A simple, fast, beautiful and light android application to <del>Jerk off</del> help you index to the definite website to watch the video.
 
-![Preview_blur](Preview1_blur.jpg)
-
-[Not Blur Version (公共场所慎入)](./Preview1.png)
+![Preview_blur](Preview1.png)
 
 [Click Here To Download (点击这里下载APK) -- Version:Test](./APK/app-debug.apk)
 
 Finished:
 
+✔ Beautiful UI
+
 ✔ Search Videos
+
+✔ Watch Preview
 
 ✔ Show all videos
 
-✔ Open each collection
+✔ Sync Official Categories
 
-✔ A sketched cool UI
+✔ Sync Official Collections
 
-✔ Watch Video's Preview Video
+✔ Safe Mode (Blur all the covers)
 
-✔ Jump to the official website to watch the full video
-
-✔ Jump to the video embedded url to watch the video
-
-✔ Video Collections Information shown in the home page
-
-✔ Jump to different category channel to watch different type of movies
-
-✔ Sort videos by latest uploading, most views, most favs, top rated and etc.
-
-✔ Show all categories in the bottom sheet by clicking the categories icon in the action bar
+✔ Jump to Official website to watch full videos
 
 Not Finished Yet:
-
-✖ Safe Mode (Blur all the pictures), ASAP
 
 ✖ Collect favorite videos in the local database (ASAP)
 

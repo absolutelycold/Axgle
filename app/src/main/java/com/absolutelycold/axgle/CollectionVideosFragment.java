@@ -27,6 +27,7 @@ public class CollectionVideosFragment extends Fragment {
     private RecyclerView.Adapter adapter;
     private PullRefreshLayout refreshLayout;
     private boolean isRefreshing = false;
+    private Boolean needBlur;
 
     boolean isLoading = false;
 
@@ -35,6 +36,14 @@ public class CollectionVideosFragment extends Fragment {
     }
 
 
+    public static CollectionVideosFragment newInstance(Boolean needBlur) {
+
+        Bundle args = new Bundle();
+        args.putBoolean("need_blur", needBlur);
+        CollectionVideosFragment fragment = new CollectionVideosFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,8 +52,7 @@ public class CollectionVideosFragment extends Fragment {
         LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_collections, container, false);
 
 
-
-
+        needBlur = getArguments().getBoolean("need_blur");
 
         refreshLayout = linearLayout.findViewById(R.id.pull_refresh_layout);
 
@@ -90,7 +98,7 @@ public class CollectionVideosFragment extends Fragment {
             super.onPostExecute(vc);
 
             videoCollection = vc;
-            adapter = new CoverCardAdapter(vc);
+            adapter = new CoverCardAdapter(vc, needBlur);
             recyclerView.setAdapter(adapter);
             InitScrollListener();
             refreshLayout.setRefreshing(false);
@@ -177,5 +185,13 @@ public class CollectionVideosFragment extends Fragment {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
+    }
+
+    public void refreshCollections() {
+        new AllVideosLoadTask().execute(0, 20);
+    }
+
+    public void setNeedBlur(Boolean needBlur) {
+        this.needBlur = needBlur;
     }
 }
