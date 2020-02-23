@@ -158,7 +158,7 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/ic_add_box_black_18dp"
+                android:src="@drawable/ic_add_box_white_18dp"
                 android:layout_alignParentRight="true"
                 android:layout_margin="10dp"
                 android:id="@+id/all_videos_add_box"/>

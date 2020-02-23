@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class AllVideos extends VideosInfo {
 
-    public final Integer TYPE = 2;
+    //public final Integer TYPE = 2;
     private Integer page;
     private Integer limit;
     private Integer CHID;

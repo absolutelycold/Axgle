@@ -92,6 +92,12 @@ public class CoverCardAdapter extends RecyclerView.Adapter {
             bitmap_404 = BitmapFactory.decodeResource(cardView.getContext().getResources(), R.drawable.axgle_404_cover);
             return cardViewHolder;
         }
+        else if (viewType == VIEW_TYPE_FAV_COLLECTION) {
+            CardView cardView = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.all_video_card_view, parent, false);
+            CardViewHolder cardViewHolder = new CardViewHolder(cardView);
+            bitmap_404 = BitmapFactory.decodeResource(cardView.getContext().getResources(), R.drawable.axgle_404_cover);
+            return cardViewHolder;
+        }
         else {
             LinearLayout progressBar = (LinearLayout)LayoutInflater.from(parent.getContext()).inflate(R.layout.load_more_circle, parent, false);
             ProgressBarHolder progressBarHolder = new ProgressBarHolder(progressBar);
@@ -117,6 +123,9 @@ public class CoverCardAdapter extends RecyclerView.Adapter {
         }
         else if (videosInfo.TYPE == VIEW_TYPE_COLLECTIONS){
             return VIEW_TYPE_COLLECTIONS;
+        }
+        else if (videosInfo.TYPE == VIEW_TYPE_FAV_COLLECTION) {
+            return VIEW_TYPE_FAV_COLLECTION;
         }
         else {
             return VIEW_TYPE_ALL_VIDEOS;
@@ -187,7 +196,73 @@ public class CoverCardAdapter extends RecyclerView.Adapter {
 
                 imageView.setImageBitmap(coverBitmap);
                 imageView.setContentDescription(((VideoCollection)videosInfo).getTitle(position));
-            }else {  // if current fragment is AllVideosFragment, go into this if
+            }else if (videosInfo.TYPE == VIEW_TYPE_FAV_COLLECTION) {
+                // if current activity is ShowUserCollectionActivity
+                final CardView cardView = ((CardViewHolder)holder).cardView;
+
+                TextView videoName = cardView.findViewById(R.id.video_name);
+                videoName.setText(((VideoUserCollection)videosInfo).getTitle(position));
+                TextView videoDuration = cardView.findViewById(R.id.video_duration);
+                videoDuration.setText(((VideoUserCollection)videosInfo).getDuration(position));
+                TextView videoUploadTime = cardView.findViewById(R.id.upload_time);
+                videoUploadTime.setText(((VideoUserCollection)videosInfo).getUploadTime(position));
+                ImageView imageView = (ImageView)cardView.findViewById(R.id.all_video_image);
+                TextView playNumView = cardView.findViewById(R.id.play_num);
+                playNumView.setText(((VideoUserCollection)videosInfo).getTotalViews(position).toString());
+                //HashMap<String, Object> collectionItem = ((AllVideos)videosInfo).getItem(position);
+                ImageView hdImage = cardView.findViewById(R.id.hd_pic);
+                if (((VideoUserCollection) videosInfo).getIsHD(position)) {
+                    hdImage.setVisibility(View.VISIBLE);
+                }
+                else {
+                    hdImage.setVisibility(View.GONE);
+                }
+                Integer likeNum  = ((VideoUserCollection) videosInfo).getLikeNumber(position);
+                Integer dislikeNum = ((VideoUserCollection) videosInfo).getDislikeNumber(position);
+                TextView likeTextView = cardView.findViewById(R.id.like_num);
+                likeTextView.setText(likeNum.toString());
+                TextView dislikeTextView = cardView.findViewById(R.id.dislike_num);
+                dislikeTextView.setText(dislikeNum.toString());
+
+                ImageView additionalOperate = cardView.findViewById(R.id.all_videos_add_box);
+//                additionalOperate.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        listener.AdditionalBoxClicked(position, view);
+//                    }
+//                });
+
+                ProgressBar coverLoadCircle = (ProgressBar)cardView.findViewById(R.id.all_video_load_circle);
+                Bitmap coverBitmap = videosInfo.getCoverBitmap(position);
+
+                System.out.println("Is Blur: " + needBlur);
+                GetCoverFromURLTask getCoverFromURLTask = new GetCoverFromURLTask(videosInfo, position);
+
+                if (coverBitmap == null) {
+                    // no cover, not visit the website yet
+                    coverLoadCircle.setVisibility(View.VISIBLE);
+                    getCoverFromURLTask.execute(cardView.getContext());
+                }
+                else {
+                    // load cover success
+
+                    coverLoadCircle.setVisibility(View.GONE);
+
+                }
+
+
+
+
+                imageView.setImageBitmap(coverBitmap);
+                imageView.setContentDescription(videosInfo.getTitle(position));
+                cardView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        allVideoListener.onSingleVideoChoose(position);
+                    }
+                });
+            }
+            else {  // if current fragment is AllVideosFragment, go into this if
                 final CardView cardView = ((CardViewHolder)holder).cardView;
 
                 TextView videoName = cardView.findViewById(R.id.video_name);

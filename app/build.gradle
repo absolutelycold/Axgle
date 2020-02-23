@@ -33,5 +33,5 @@ dependencies {
     implementation 'com.baoyz.pullrefreshlayout:library:1.2.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.github.mancj:MaterialSearchBar:0.8.5'
-    compile 'com.github.jrvansuita:GaussianBlur:1.0.3'
+    implementation 'com.github.jrvansuita:GaussianBlur:1.0.3'
 }

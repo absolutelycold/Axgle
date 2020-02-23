@@ -32,7 +32,10 @@ public class UserFavVideoDatabaseHelper extends SQLiteOpenHelper {
                     "COVERURL TEXT," +
                     "PREVIEWURL TEXT," +
                     "EMBEDEDURL TEXT," +
+                    "VIDEOURL TEXT," +
+                    "KEYWORDS TEXT," +
                     "ISHD BOOLEAN," +
+                    "TOTALVIEW INTEGER," +
                     "LIKENUM INTEGER," +
                     "DISLIKENUM INTEGER," +
                     "UPDATETIME INTEGER," +

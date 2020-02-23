@@ -53,6 +53,7 @@ public class SearchResultActivity extends AppCompatActivity implements OrderDial
         fragmentTransaction.replace(R.id.search_result_container, searchResultFragment);
         fragmentTransaction.commit();
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -89,13 +90,13 @@ public class SearchResultActivity extends AppCompatActivity implements OrderDial
                     CategoryListDialogFragment.newInstance(categoriesDataWithoutNum).show(getSupportFragmentManager(), CategoryListDialogFragment.TAG);
                 }
                 break;
-            case R.id.action_back:
-                finish();
-                break;
             case R.id.give_me_a_star:
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse("https://github.com/absolutelycold/axgle"));
                 startActivity(intent);
+                break;
+            case android.R.id.home:
+                finish();
                 break;
         }
         return super.onOptionsItemSelected(item);

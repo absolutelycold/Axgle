@@ -148,6 +148,7 @@ public class MainActivity extends AppCompatActivity implements OrderDialogFragme
                 collectionVideosFragment.refreshCollections();
                 allVideosFragment.setNeedBlur(needBlur);
                 allVideosFragment.refreshAll();
+                drawerLayout.closeDrawer(navigationView);
             }
         });
 
@@ -182,7 +183,13 @@ public class MainActivity extends AppCompatActivity implements OrderDialogFragme
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-
+            case R.id.my_collection:
+                //Toast.makeText(this, "My Collection", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, ShowUserCollectionActivity.class);
+                intent.putExtra("needBlur", needBlur);
+                startActivity(intent);
+                drawerLayout.closeDrawer(navigationView);
+                break;
         }
         return false;
     }
@@ -216,7 +223,6 @@ public class MainActivity extends AppCompatActivity implements OrderDialogFragme
         categoryItem = menu.findItem(R.id.action_category);
         refreshAllItem = menu.findItem(R.id.refresh_all_tab);
         search = menu.findItem(R.id.action_search);
-        menu.findItem(R.id.action_back).setVisible(false);
         refreshAllItem.setVisible(false);
         sortAllItem.setVisible(false);
         categoryItem.setVisible(false);

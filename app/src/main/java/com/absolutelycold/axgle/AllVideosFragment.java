@@ -309,7 +309,10 @@ public class AllVideosFragment extends Fragment implements CoverCardAdapter.onAd
         String coverUrl = allVideosInfo.getCoverUrl(selectedCardPosition);
         String previewUrl = allVideosInfo.getPreviewUrl(selectedCardPosition);
         String embededUrl = allVideosInfo.getEmbeddedVideoUrl(selectedCardPosition);
+        String videoUrl = allVideosInfo.getVideoUrl(selectedCardPosition);
+        String keyWords = allVideosInfo.getKeyword(selectedCardPosition);
         Boolean isHD = allVideosInfo.getIsHD(selectedCardPosition);
+        Integer totalViews = allVideosInfo.getTotalViews(selectedCardPosition);
         Integer likeNum = allVideosInfo.getLikeNumber(selectedCardPosition);
         Integer dislikeNum = allVideosInfo.getDislikeNumber(selectedCardPosition);
         Integer updateTime = allVideosInfo.getUploadTimeStamp(selectedCardPosition);
@@ -318,7 +321,10 @@ public class AllVideosFragment extends Fragment implements CoverCardAdapter.onAd
         insertData.put("COVERURL", coverUrl);
         insertData.put("PREVIEWURL", previewUrl);
         insertData.put("EMBEDEDURL", embededUrl);
+        insertData.put("VIDEOURL", videoUrl);
+        insertData.put("KEYWORDS", keyWords);
         insertData.put("ISHD", isHD);
+        insertData.put("TOTALVIEW", totalViews);
         insertData.put("LIKENUM", likeNum);
         insertData.put("DISLIKENUM", dislikeNum);
         insertData.put("UPDATETIME", updateTime);
