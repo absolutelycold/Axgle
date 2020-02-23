@@ -16,14 +16,17 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.baoyz.widget.PullRefreshLayout;
+
+import java.util.ArrayList;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AllVideosFragment extends Fragment {
+public class AllVideosFragment extends Fragment implements CoverCardAdapter.onAdditionalBoxListener, OrderDialogFragment.Listener{
 
     public static final int FRAGMENT_ALL = 0;
     public static final int FRAGMENT_SEARCH = 1;
@@ -38,6 +41,7 @@ public class AllVideosFragment extends Fragment {
     private int fragmentType;
     private String searchContent;
     private Boolean needBlur;
+    private UserFavVideoDatabaseHelper dbHepler = null;
 
     public AllVideosFragment() {
         // Required empty public constructor
@@ -91,6 +95,23 @@ public class AllVideosFragment extends Fragment {
         return linearLayout;
     }
 
+    @Override
+    public void AdditionalBoxClicked(int position, View view) {
+        ArrayList<String> options = new ArrayList<>();
+        options.add("Add to ur own collection");
+        OrderDialogFragment.newInstance(options).show(getChildFragmentManager(), OrderDialogFragment.TAG);
+    }
+
+    @Override
+    public void onSortOptionSelected(int position) {
+        switch (position) {
+            case 0:
+                Toast.makeText(getActivity(), "Fragment Clicked", Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
+
+
     public class LoadAllVideosInfoTask extends AsyncTask<Object, Void, Void> {
 
 
@@ -122,7 +143,7 @@ public class AllVideosFragment extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            CoverCardAdapter coverCardAdapter = new CoverCardAdapter(allVideosInfo, needBlur);
+            CoverCardAdapter coverCardAdapter = new CoverCardAdapter(allVideosInfo, needBlur, AllVideosFragment.this);
             coverCardAdapter.SetAllVideoListener(new CoverCardAdapter.AllVideoListener() {
                 @Override
                 public void onSingleVideoChoose(int position) {
@@ -249,5 +270,24 @@ public class AllVideosFragment extends Fragment {
 
     public void setNeedBlur(Boolean needBlur) {
         this.needBlur = needBlur;
+    }
+
+    private void LoadSqliteDatabase() {
+        new LoadDatabaseTask().execute();
+    }
+
+    class LoadDatabaseTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            dbHepler = new UserFavVideoDatabaseHelper(getActivity());
+            return null;
+        }
     }
 }

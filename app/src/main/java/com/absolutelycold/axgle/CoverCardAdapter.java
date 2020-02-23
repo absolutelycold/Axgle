@@ -15,11 +15,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.vansuita.gaussianblur.GaussianBlur;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CoverCardAdapter extends RecyclerView.Adapter {
@@ -27,6 +29,7 @@ public class CoverCardAdapter extends RecyclerView.Adapter {
     public static final int VIEW_TYPE_COLLECTIONS = 0;
     public static final int VIEW_TYPE_LOADING = 1;
     public static final int VIEW_TYPE_ALL_VIDEOS = 2;
+    public static final int VIEW_TYPE_FAV_COLLECTION = 3;
     private int num = 0;
     private Boolean needBlur;
 
@@ -35,10 +38,18 @@ public class CoverCardAdapter extends RecyclerView.Adapter {
 
     //private VideoCollection videoCollection = null;
     private VideosInfo videosInfo = null;
+    private onAdditionalBoxListener listener;
 
 
     public CoverCardAdapter(VideosInfo vc, Boolean needBlur) {
         //this.videoCollection = (VideoCollection)vc;
+        this.needBlur = needBlur;
+        this.videosInfo = vc;
+    }
+
+    public CoverCardAdapter(VideosInfo vc, Boolean needBlur, onAdditionalBoxListener listener) {
+        //this.videoCollection = (VideoCollection)vc;
+        this.listener = listener;
         this.needBlur = needBlur;
         this.videosInfo = vc;
     }
@@ -177,7 +188,7 @@ public class CoverCardAdapter extends RecyclerView.Adapter {
                 imageView.setImageBitmap(coverBitmap);
                 imageView.setContentDescription(((VideoCollection)videosInfo).getTitle(position));
             }else {  // if current fragment is AllVideosFragment, go into this if
-                CardView cardView = ((CardViewHolder)holder).cardView;
+                final CardView cardView = ((CardViewHolder)holder).cardView;
 
                 TextView videoName = cardView.findViewById(R.id.video_name);
                 videoName.setText(((AllVideos)videosInfo).getTitle(position));
@@ -202,6 +213,13 @@ public class CoverCardAdapter extends RecyclerView.Adapter {
                 likeTextView.setText(likeNum.toString());
                 TextView dislikeTextView = cardView.findViewById(R.id.dislike_num);
                 dislikeTextView.setText(dislikeNum.toString());
+                ImageView additionalOperate = cardView.findViewById(R.id.all_videos_add_box);
+                additionalOperate.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        listener.AdditionalBoxClicked(position, view);
+                    }
+                });
 
                 ProgressBar coverLoadCircle = (ProgressBar)cardView.findViewById(R.id.all_video_load_circle);
                 Bitmap coverBitmap = videosInfo.getCoverBitmap(position);
@@ -319,5 +337,9 @@ public class CoverCardAdapter extends RecyclerView.Adapter {
 
 
         }
+    }
+
+    public interface onAdditionalBoxListener {
+        public void AdditionalBoxClicked(int position, View view);
     }
 }

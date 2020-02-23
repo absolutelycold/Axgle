@@ -203,6 +203,22 @@ public class AllVideos extends VideosInfo {
         return (String)allVideosInfo.get(index).get("embedded_url");
     }
 
+    public Integer getDurationInt(int index) {
+        if (index >= allVideosInfo.size()) {
+            return null;
+        }
+
+        return (Integer)allVideosInfo.get(index).get("duration_int");
+    }
+
+    public Integer getUploadTimeStamp(int index) {
+        if (index >= allVideosInfo.size()) {
+            return null;
+        }
+
+        return (Integer)allVideosInfo.get(index).get("UpdateTimeStamp");
+    }
+
     public void addItem(HashMap hashMap) {
         allVideosInfo.add(hashMap);
     }

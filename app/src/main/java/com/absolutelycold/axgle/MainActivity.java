@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements OrderDialogFragme
     private CollectionVideosFragment collectionVideosFragment;
     private AllVideosFragment allVideosFragment;
     private Switch timeSwitch;
+
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -274,6 +275,7 @@ public class MainActivity extends AppCompatActivity implements OrderDialogFragme
     @Override
     public void onSortOptionSelected(int position) {
         //something to to after listening
+        //Toast.makeText(this, "Main Activity Clicked", Toast.LENGTH_SHORT).show();
         String order = "mr";
         switch (position) {
             case 0:

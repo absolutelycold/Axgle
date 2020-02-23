@@ -8,7 +8,7 @@ A simple, fast, beautiful and light android application to <del>Jerk off</del> h
 
 ![Preview_blur](Preview1.png)
 
-[Click Here To Download (点击这里下载APK) -- Version:Test](./APK/app-debug.apk)
+[Dowload in the release (点击这里下载)](https://github.com/absolutelycold/Axgle/releases)
 
 Finished:
 
