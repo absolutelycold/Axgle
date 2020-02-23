@@ -30,6 +30,8 @@ public class UserFavVideoDatabaseHelper extends SQLiteOpenHelper {
                     "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "VIDEONAME TEXT," +
                     "COVERURL TEXT," +
+                    "PREVIEWURL TEXT," +
+                    "EMBEDEDURL TEXT," +
                     "ISHD BOOLEAN," +
                     "LIKENUM INTEGER," +
                     "DISLIKENUM INTEGER," +

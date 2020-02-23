@@ -109,11 +109,15 @@ public class AllVideosFragment extends Fragment implements CoverCardAdapter.onAd
     public void onSortOptionSelected(int position) {
         switch (position) {
             case 0:
-                Toast.makeText(getActivity(), "Fragment Clicked", Toast.LENGTH_SHORT).show();
+
                 if (dbHelper != null) {
 
                     ContentValues insertData = new ContentValues();
                     fillInsertContentValue(insertData, selectedCardPosition);
+                    Toast.makeText(getActivity(), "Successfully add to your Fav.", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(getActivity(), "Fail to add. Please to wait for the database loading.", Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
@@ -303,6 +307,8 @@ public class AllVideosFragment extends Fragment implements CoverCardAdapter.onAd
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         String videosName = allVideosInfo.getTitle(selectedCardPosition);
         String coverUrl = allVideosInfo.getCoverUrl(selectedCardPosition);
+        String previewUrl = allVideosInfo.getPreviewUrl(selectedCardPosition);
+        String embededUrl = allVideosInfo.getEmbeddedVideoUrl(selectedCardPosition);
         Boolean isHD = allVideosInfo.getIsHD(selectedCardPosition);
         Integer likeNum = allVideosInfo.getLikeNumber(selectedCardPosition);
         Integer dislikeNum = allVideosInfo.getDislikeNumber(selectedCardPosition);
@@ -310,6 +316,8 @@ public class AllVideosFragment extends Fragment implements CoverCardAdapter.onAd
         Integer videoDuration = allVideosInfo.getDurationInt(selectedCardPosition);
         insertData.put("VIDEONAME", videosName);
         insertData.put("COVERURL", coverUrl);
+        insertData.put("PREVIEWURL", previewUrl);
+        insertData.put("EMBEDEDURL", embededUrl);
         insertData.put("ISHD", isHD);
         insertData.put("LIKENUM", likeNum);
         insertData.put("DISLIKENUM", dislikeNum);
