@@ -12,6 +12,8 @@ A simple, fast, beautiful and light android application to <del>Jerk off</del> h
 
 Finished:
 
+✔ No Ads 
+
 ✔ Beautiful UI
 
 ✔ Search Videos
@@ -28,8 +30,8 @@ Finished:
 
 ✔ Jump to Official website to watch full videos
 
-Not Finished Yet:
+✔ Collect favorite videos in the local database
 
-✖ Collect favorite videos in the local database (ASAP)
+Not Finished Yet:
 
 ✖ <del>Watch/Download videos (If someone provide me java library for capturing the m3u8 video from video page)</del> **I know this option may break the rules of the Avgle, so if someone provide me such a library, I will not publish it. However, I will do it in another branch.**

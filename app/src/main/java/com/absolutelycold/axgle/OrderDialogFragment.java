@@ -40,14 +40,6 @@ public class OrderDialogFragment extends BottomSheetDialogFragment {
         return fragment;
     }
 
-    public static OrderDialogFragment newInstance(ArrayList<String> orderList, Integer position) {
-        final OrderDialogFragment fragment = new OrderDialogFragment();
-        final Bundle args = new Bundle();
-        args.putInt("position", position);
-        args.putStringArrayList(ARG_ITEM_COUNT, orderList);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Nullable
     @Override

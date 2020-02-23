@@ -185,4 +185,8 @@ public class VideoUserCollection extends VideosInfo {
         }
         return (String) userCollectionInfo.get(index).get("embeddedUrl");
     }
+
+    public void removeItem(int index) {
+        userCollectionInfo.remove(index);
+    }
 }

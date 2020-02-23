@@ -225,12 +225,12 @@ public class CoverCardAdapter extends RecyclerView.Adapter {
                 dislikeTextView.setText(dislikeNum.toString());
 
                 ImageView additionalOperate = cardView.findViewById(R.id.all_videos_add_box);
-//                additionalOperate.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        listener.AdditionalBoxClicked(position, view);
-//                    }
-//                });
+                additionalOperate.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        listener.AdditionalBoxClicked(position, view);
+                    }
+                });
 
                 ProgressBar coverLoadCircle = (ProgressBar)cardView.findViewById(R.id.all_video_load_circle);
                 Bitmap coverBitmap = videosInfo.getCoverBitmap(position);
