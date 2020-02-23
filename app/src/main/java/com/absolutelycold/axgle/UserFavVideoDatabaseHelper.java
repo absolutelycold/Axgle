@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class UserFavVideoDatabaseHelper extends SQLiteOpenHelper {
 
-    private static final String DB_NAME = "User_Fav";
+    private static final String DB_NAME = "UserFav";
     private static final int DB_VERSION = 1;
 
     public UserFavVideoDatabaseHelper(Context context) {

@@ -1,7 +1,9 @@
 package com.absolutelycold.axgle;
 
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -13,9 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baoyz.widget.PullRefreshLayout;
@@ -41,7 +41,8 @@ public class AllVideosFragment extends Fragment implements CoverCardAdapter.onAd
     private int fragmentType;
     private String searchContent;
     private Boolean needBlur;
-    private UserFavVideoDatabaseHelper dbHepler = null;
+    private UserFavVideoDatabaseHelper dbHelper = null;
+    private Integer selectedCardPosition = null;
 
     public AllVideosFragment() {
         // Required empty public constructor
@@ -62,6 +63,7 @@ public class AllVideosFragment extends Fragment implements CoverCardAdapter.onAd
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_all_videos, container, false);
+        LoadSqliteDatabase();
         fragmentType = getArguments().getInt("fragment_type");
         searchContent = getArguments().getString("search_content");
         needBlur = getArguments().getBoolean("need_blur");
@@ -97,6 +99,7 @@ public class AllVideosFragment extends Fragment implements CoverCardAdapter.onAd
 
     @Override
     public void AdditionalBoxClicked(int position, View view) {
+        selectedCardPosition = position;
         ArrayList<String> options = new ArrayList<>();
         options.add("Add to ur own collection");
         OrderDialogFragment.newInstance(options).show(getChildFragmentManager(), OrderDialogFragment.TAG);
@@ -107,6 +110,11 @@ public class AllVideosFragment extends Fragment implements CoverCardAdapter.onAd
         switch (position) {
             case 0:
                 Toast.makeText(getActivity(), "Fragment Clicked", Toast.LENGTH_SHORT).show();
+                if (dbHelper != null) {
+
+                    ContentValues insertData = new ContentValues();
+                    fillInsertContentValue(insertData, selectedCardPosition);
+                }
                 break;
         }
     }
@@ -286,8 +294,28 @@ public class AllVideosFragment extends Fragment implements CoverCardAdapter.onAd
 
         @Override
         protected Void doInBackground(Void... voids) {
-            dbHepler = new UserFavVideoDatabaseHelper(getActivity());
+            dbHelper = new UserFavVideoDatabaseHelper(getActivity());
             return null;
         }
+    }
+
+    private void fillInsertContentValue(ContentValues insertData, int position) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        String videosName = allVideosInfo.getTitle(selectedCardPosition);
+        String coverUrl = allVideosInfo.getCoverUrl(selectedCardPosition);
+        Boolean isHD = allVideosInfo.getIsHD(selectedCardPosition);
+        Integer likeNum = allVideosInfo.getLikeNumber(selectedCardPosition);
+        Integer dislikeNum = allVideosInfo.getDislikeNumber(selectedCardPosition);
+        Integer updateTime = allVideosInfo.getUploadTimeStamp(selectedCardPosition);
+        Integer videoDuration = allVideosInfo.getDurationInt(selectedCardPosition);
+        insertData.put("VIDEONAME", videosName);
+        insertData.put("COVERURL", coverUrl);
+        insertData.put("ISHD", isHD);
+        insertData.put("LIKENUM", likeNum);
+        insertData.put("DISLIKENUM", dislikeNum);
+        insertData.put("UPDATETIME", updateTime);
+        insertData.put("VIDEOLENGTH", videoDuration);
+        db.insert("UserFav", null,insertData);
+        db.close();
     }
 }
