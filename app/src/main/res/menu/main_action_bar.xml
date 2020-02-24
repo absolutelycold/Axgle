@@ -11,11 +11,7 @@
         app:showAsAction="always"
         android:orderInCategory="2"/>
 
-    <item android:id="@+id/action_search"
-        android:title="Search"
-        android:orderInCategory="3"
-        android:icon="@drawable/ic_search_black_18dp"
-        app:showAsAction="always"/>
+
 
 
     <item android:id="@+id/action_category"
@@ -29,6 +25,12 @@
         android:icon="@drawable/ic_autorenew_black_18dp"
         app:showAsAction="always"
         android:orderInCategory="99"/>
+
+    <item android:id="@+id/action_search"
+        android:title="Search"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_search_black_18dp"
+        app:showAsAction="always"/>
 
     <item android:id="@+id/give_me_a_star"
         android:title="Give me a ⭐"

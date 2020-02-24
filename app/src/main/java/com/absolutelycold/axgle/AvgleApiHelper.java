@@ -308,6 +308,8 @@ public  class AvgleApiHelper {
                 hashMap.put("preview_video_url", previewVideoUrl);
                 hashMap.put("total_videos", totalVideosNum);
                 hashMap.put("hd", isHD);
+                hashMap.put("duration_int", duration);
+                hashMap.put("UpdateTimeStamp", unixTimeStamp);
 
                 allVideosInfo.add(hashMap);
 

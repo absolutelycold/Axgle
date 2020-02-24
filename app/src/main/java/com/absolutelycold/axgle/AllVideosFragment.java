@@ -317,6 +317,7 @@ public class AllVideosFragment extends Fragment implements CoverCardAdapter.onAd
         Integer dislikeNum = allVideosInfo.getDislikeNumber(selectedCardPosition);
         Integer updateTime = allVideosInfo.getUploadTimeStamp(selectedCardPosition);
         Integer videoDuration = allVideosInfo.getDurationInt(selectedCardPosition);
+        System.out.println("Add data:" + updateTime + ", " + videoDuration);
         insertData.put("VIDEONAME", videosName);
         insertData.put("COVERURL", coverUrl);
         insertData.put("PREVIEWURL", previewUrl);
