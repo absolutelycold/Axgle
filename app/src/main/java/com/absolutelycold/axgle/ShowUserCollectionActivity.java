@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -38,7 +40,7 @@ public class ShowUserCollectionActivity extends AppCompatActivity implements Cov
         recyclerAdapter = getNewRecyclerAdapter();
         recyclerView.setAdapter(recyclerAdapter);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
     }
 
     @Override
@@ -46,6 +48,11 @@ public class ShowUserCollectionActivity extends AppCompatActivity implements Cov
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
+                break;
+            case R.id.give_me_a_star:
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("https://github.com/absolutelycold/axgle"));
+                startActivity(intent);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -88,4 +95,17 @@ public class ShowUserCollectionActivity extends AppCompatActivity implements Cov
         });
         return recyclerAdapter;
     }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_action_bar, menu);
+        menu.findItem(R.id.action_sort_all).setVisible(false);
+        menu.findItem(R.id.action_category).setVisible(false);
+        menu.findItem(R.id.refresh_all_tab).setVisible(false);
+        menu.findItem(R.id.action_search).setVisible(false);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
 }

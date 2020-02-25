@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import java.util.ArrayList;
@@ -54,6 +55,7 @@ public class SearchResultActivity extends AppCompatActivity implements OrderDial
         fragmentTransaction.commit();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
     }
 
     @Override
