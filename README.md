@@ -36,8 +36,4 @@ Finished:
 
 ✔ Collect favorite videos in the local database （本地收藏夹）
 
-Not Finished Yet:
-
-✖ Show embedded video in the WebView (在WebView中显示嵌入视频)
-
-✖ <del>Watch/Download videos (If someone provide me java library for capturing the m3u8 video from video page)</del> **I know this option may break the rules of the Avgle, so if someone provide me such a library, I will not publish it. However, I will do it in another branch.**
+✔ watch full video(在WebView中显示嵌入视频)

@@ -43,6 +43,7 @@ public class ShowVideoPreviewActivity extends AppCompatActivity implements Order
         decorView = getWindow().getDecorView();
         decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
         decorView.setBackgroundColor(Color.BLACK);
+
         if (savedInstanceState != null) {
             this.previewVideoUrl = savedInstanceState.getString("preview_video_url");
             this.embeddedUrl = savedInstanceState.getString("embedded_url");
@@ -79,7 +80,6 @@ public class ShowVideoPreviewActivity extends AppCompatActivity implements Order
             }
         });
         videoView = findViewById(R.id.video_preview);
-
         //System.out.println("Play Url: " + previewVideoUrl);
 
     }
@@ -120,8 +120,8 @@ public class ShowVideoPreviewActivity extends AppCompatActivity implements Order
                 orderDialogFragment.dismiss();
                 break;
             case 1:
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(embeddedUrl));
+                Intent intent = new Intent(this, EmbedVideoActivity.class);
+                intent.putExtra("embeddedUrl", embeddedUrl);
                 startActivity(intent);
                 break;
             case 2:
@@ -142,4 +142,12 @@ public class ShowVideoPreviewActivity extends AppCompatActivity implements Order
         outState.putString("video_url", videoUrl);
         outState.putString("embedded_url", embeddedUrl);
     }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
+    }
+
+
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.absolutelycold.axgle">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -10,20 +11,30 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_avgle_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".ShowUserCollectionActivity"
+        android:theme="@style/AppTheme"
+        android:hardwareAccelerated="true">
+        <activity
+            android:name=".EmbedVideoActivity"
+            android:screenOrientation="sensorLandscape"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".ShowUserCollectionActivity"
+            android:label="My Collection"
             android:screenOrientation="portrait"
-            android:label="My Collection"></activity>
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".SearchResultActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".ShowVideoPreviewActivity"
             android:parentActivityName=".MainActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="sensorLandscape"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
