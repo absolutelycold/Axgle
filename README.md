@@ -37,3 +37,5 @@ Finished:
 ✔ Collect favorite videos in the local database （本地收藏夹）
 
 ✔ watch full video(在WebView中显示嵌入视频)
+
+✔ Search related videos (搜索相关影片)
