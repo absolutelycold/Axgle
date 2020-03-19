@@ -87,7 +87,7 @@ public class OrderDialogFragment extends BottomSheetDialogFragment {
                 @Override
                 public void onClick(View v) {
                     if (mListener != null) {
-                        mListener.onSortOptionSelected(getAdapterPosition());
+                        mListener. onSortOptionSelected(getAdapterPosition());
                         dismiss();
                     }
                 }

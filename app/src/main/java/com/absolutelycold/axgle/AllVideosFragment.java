@@ -102,6 +102,7 @@ public class AllVideosFragment extends Fragment implements CoverCardAdapter.onAd
         selectedCardPosition = position;
         ArrayList<String> options = new ArrayList<>();
         options.add("Add to ur own collection");
+        options.add("Search Related Videos");
         OrderDialogFragment.newInstance(options).show(getChildFragmentManager(), OrderDialogFragment.TAG);
     }
 
@@ -119,6 +120,15 @@ public class AllVideosFragment extends Fragment implements CoverCardAdapter.onAd
                 else {
                     Toast.makeText(getActivity(), "Fail to add. Please to wait for the database loading.", Toast.LENGTH_SHORT).show();
                 }
+                break;
+            case 1:
+                String keyWords = allVideosInfo.getKeyword(selectedCardPosition);
+                Intent intent = new Intent(getContext(), SearchResultActivity.class);
+                intent.putExtra("search_content", keyWords);
+                intent.putStringArrayListExtra("categories_data", null);
+                intent.putExtra("needBlur", needBlur);
+                startActivity(intent);
+                Toast.makeText(getContext(), "Recommand clicked", Toast.LENGTH_SHORT).show();
                 break;
         }
     }

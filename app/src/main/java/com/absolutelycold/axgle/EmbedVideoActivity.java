@@ -35,10 +35,8 @@ public class EmbedVideoActivity extends AppCompatActivity {
         decorView = getWindow().getDecorView();
         decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
         decorView.setBackgroundColor(Color.BLACK);
-
         webView = findViewById(R.id.embed_video_web_view);
         webView.setBackgroundColor(Color.TRANSPARENT);
-
 
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
@@ -61,5 +59,11 @@ public class EmbedVideoActivity extends AppCompatActivity {
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("embedded_url", embeddedUrl);
     }
 }
